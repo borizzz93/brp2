@@ -42,16 +42,31 @@ GITHUB_REPO="https://borizzz93/brp2.git"
 if [ "$EUID" -eq 0 ]; then
     print_warning "Running as root - will use direct commands instead of sudo"
     SUDO_CMD=""
+    CURRENT_USER="root"
+    
+    # Create deployment user if running as root
+    if ! id misago &>/dev/null; then
+        print_status "Creating misago user for deployment..."
+        useradd -m -s /bin/bash misago
+        usermod -aG sudo misago
+        usermod -aG docker misago
+    fi
+    DEPLOYMENT_USER="misago"
 else
     SUDO_CMD="sudo"
+    CURRENT_USER="$USER"
+    DEPLOYMENT_USER="$USER"
 fi
+
+# Update project directory owner
+PROJECT_USER="$DEPLOYMENT_USER"
 
 print_header "🚀 MISAGO AUTOMATED DEPLOYMENT"
 print_header "Domain: $DOMAIN | Server: $SERVER_IP"
 
 # Step 1: System Update
 print_status "Step 1/12: Updating system packages..."
-if sudo apt update && sudo apt upgrade -y; then
+if $SUDO_CMD apt update && $SUDO_CMD apt upgrade -y; then
     print_status "✅ System updated successfully"
 else
     print_error "❌ System update failed"
@@ -61,7 +76,7 @@ fi
 # Step 2: Install dependencies
 print_status "Step 2/12: Installing system dependencies..."
 DEPS="curl wget git unzip htop nano ufw"
-if sudo apt install -y $DEPS; then
+if $SUDO_CMD apt install -y $DEPS; then
     print_status "✅ Dependencies installed successfully"
 else
     print_error "❌ Dependencies installation failed"
@@ -70,19 +85,19 @@ fi
 
 # Step 3: Configure Firewall
 print_status "Step 3/12: Configuring firewall..."
-sudo ufw allow OpenSSH
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-sudo ufw allow 8080/tcp
-yes | sudo ufw enable
+$SUDO_CMD ufw allow OpenSSH
+$SUDO_CMD ufw allow 80/tcp
+$SUDO_CMD ufw allow 443/tcp
+$SUDO_CMD ufw allow 8080/tcp
+yes | $SUDO_CMD ufw enable
 print_status "✅ Firewall configured successfully"
 
 # Step 4: Install Docker
 print_status "Step 4/12: Installing Docker..."
 if ! command -v docker &> /dev/null; then
     curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-    sudo usermod -aG docker $USER
+    $SUDO_CMD sh get-docker.sh
+    $SUDO_CMD usermod -aG docker $USER
     rm get-docker.sh
     print_status "✅ Docker installed successfully"
 else
@@ -92,8 +107,8 @@ fi
 # Install Docker Compose
 print_status "Step 5/12: Installing Docker Compose..."
 if ! command -v docker-compose &> /dev/null; then
-    sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+    $SUDO_CMD curl -L "https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    $SUDO_CMD chmod +x /usr/local/bin/docker-compose
     print_status "✅ Docker Compose installed successfully"
 else
     print_status "✅ Docker Compose already installed"
@@ -103,11 +118,11 @@ fi
 print_status "Step 6/12: Setting up swap memory..."
 TOTAL_MEM=$(free -m | awk 'NR==2{printf "%.0f", $2}')
 if [ "$TOTAL_MEM" -lt 4096 ]; then
-    sudo fallocate -l 2G /swapfile
-    sudo chmod 600 /swapfile
-    sudo mkswap /swapfile
-    sudo swapon /swapfile
-    echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+    $SUDO_CMD fallocate -l 2G /swapfile
+    $SUDO_CMD chmod 600 /swapfile
+    $SUDO_CMD mkswap /swapfile
+    $SUDO_CMD swapon /swapfile
+    echo '/swapfile none swap sw 0 0' | $SUDO_CMD tee -a /etc/fstab
     print_status "✅ Swap memory configured"
 else
     print_status "✅ Sufficient memory available"
@@ -115,8 +130,8 @@ fi
 
 # Step 7: Create project directory
 print_status "Step 7/12: Setting up project directory..."
-sudo mkdir -p $PROJECT_DIR
-sudo chown $USER:$USER $PROJECT_DIR
+$SUDO_CMD mkdir -p $PROJECT_DIR
+$SUDO_CMD chown $PROJECT_USER:$PROJECT_USER $PROJECT_DIR
 cd $PROJECT_DIR
 print_status "✅ Project directory created"
 
