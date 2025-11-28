@@ -1,0 +1,59 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% if target.pk %}
+{% translate target.title %}
+{% else %}
+{% translate "New menu item" context "admin menu item form" %}
+{% endif %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+{% if target.pk %}
+  <small>
+    {{ target }}
+  </small>
+{% endif %}
+{% endblock page-header %}
+
+
+{% block page-actions %}
+
+{% endblock %}
+
+
+{% block form-header %}
+{% if target.pk %}
+  {% translate "Edit menu item" context "admin menu item form" %}
+{% else %}
+  {% translate "New menu item" context "admin menu item form" %}
+{% endif %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Basic settings" context "admin menu item form" %}</legend>
+
+    {% form_row form.title %}
+    {% form_row form.url %}
+    
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Behavior and appearance" context "admin menu item form" %}</legend>
+    
+    {% form_row form.menu %}
+    {% form_row form.css_class %}
+    {% form_row form.target_blank %}
+    {% form_row form.rel %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

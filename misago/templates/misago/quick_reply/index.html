@@ -1,0 +1,20 @@
+{% load i18n misago_component %}
+
+{% if is_request_htmx %}
+  {% include "misago/snackbars.html" %}
+  {% if new_feed %}
+    {% if htmx_swap %}
+      {% for item in new_feed %}
+        {% includecomponent item %}
+      {% endfor %}
+    {% else %}
+      <div hx-swap-oob="beforeend:.posts-feed-inner">
+        {% for item in new_feed %}
+          {% includecomponent item %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{% include "misago/quick_reply/form.html" %}

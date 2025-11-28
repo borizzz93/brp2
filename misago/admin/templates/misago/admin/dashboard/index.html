@@ -1,0 +1,56 @@
+{% extends "misago/admin/layout.html" %}
+{% load i18n misago_plugins %}
+
+
+{% block title %}{% translate "Dashboard" context "admin dashboard" %} | {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div class="page-header row align-items-center">
+  <div class="col">
+    <h1>{% translate "Dashboard" context "admin dashboard" %}</h1>
+  </div>
+</div>
+
+{% pluginoutlet ADMIN_DASHBOARD_START %}
+{% include "misago/admin/dashboard/checks.html" %}
+{% pluginoutlet ADMIN_DASHBOARD_AFTER_CHECKS %}
+{% include "misago/admin/dashboard/analytics.html" %}
+{% pluginoutlet ADMIN_DASHBOARD_AFTER_ANALYTICS %}
+{% include "misago/admin/dashboard/totals.html" %}
+{% pluginoutlet ADMIN_DASHBOARD_END %}
+{% endblock content %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+  window.misago.initVersionCheck({
+    elementId: "admin-version-check",
+    uri: "{% url 'misago:admin:graphql:index' %}",
+
+    errorMessage: {
+      message: "{% translate 'Version check is currently unavailable due to an error.' context 'admin version check' %}",
+      description: "{% translate 'Misago admin API did not answer or answered with an error.' context 'admin version check' %}"
+    },
+    loadingMessage: {
+      message: "{% translate 'Checking Misago version used by the site...' context 'admin version check' %}",
+      description: "{% translate 'Version check feature relies on the API operated by the Python Package Index (pypi.org) to retrieve the latest Misago release version.' context 'admin version check' %}"
+    }
+  })
+  window.misago.initAnalytics({
+    elementId: "admin-analytics",
+    uri: "{% url 'misago:admin:graphql:index' %}",
+
+    title: "{% translate 'Analytics' context 'admin analytics' %}",
+    labels: {
+      users: "{% translate 'User registrations' context 'admin analytics' %}",
+      userDeletions: "{% translate 'User deletions' context 'admin analytics' %}",
+      threads: "{% translate 'Threads started' context 'admin analytics' %}",
+      posts: "{% translate 'Posts' context 'admin analytics' %}",
+      attachments: "{% translate 'Attachments uploaded' context 'admin analytics' %}",
+      dataDownloads: "{% translate 'Data download requests' context 'admin analytics' %}"
+    },
+    errorMessage: "{% translate 'Site analytics are currently unavailable due to an error.' context 'admin analytics' %}"
+  })
+</script>
+{% endblock javascript %}

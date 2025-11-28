@@ -1,0 +1,44 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Wrong way" context "error 405 page" %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}
+{% translate "This page should be reached via form submission or pressing button." context "error 405 page" %}
+{% endblock meta-description %}
+
+
+{% block og-title %}{% translate "Wrong way" context "error 405 page" %}{% endblock %}
+{% block twitter-title %}{% translate "Wrong way" context "error 405 page" %}{% endblock %}
+
+
+{% block og-description %}
+{% translate "This page should be reached via form submission or pressing button." context "error 405 page" %}
+{% endblock %}
+
+
+{% block twitter-description %}
+{% translate "This page should be reached via form submission or pressing button." context "error 405 page" %}
+{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-error-405">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">remove_circle_outline</span>
+      </div>
+
+      <div class="message-body">
+        <p class="lead">{% translate "Page reached in wrong way." context "error 405 page" %}</p>
+        <p>{% translate "This page should be reached via form submission or pressing button." context "error 405 page" %}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

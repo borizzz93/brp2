@@ -1,0 +1,79 @@
+//
+// Panels Flavor
+// --------------------------------------------------
+
+.panel {
+  border: none;
+  border-radius: @border-radius-base;
+
+  .panel-heading,
+  .panel-footer {
+    background: @panel-bg;
+  }
+
+  .panel-title {
+    color: @panel-title-color;
+  }
+
+  .form-group + .form-group {
+    margin-top: @line-height-computed;
+  }
+
+  .panel-body > .form-group:first-child {
+    margin-top: @line-height-computed / 2;
+  }
+
+  fieldset {
+    margin-top: @line-height-computed;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+
+    legend {
+      border: none;
+
+      color: @panel-fieldset-color;
+      font-weight: 300;
+    }
+  }
+}
+
+// use default message icon color for panel messages
+.panel-message-body .message-icon {
+  color: @message-icon-color;
+}
+
+// Reply thread panel
+.panel-quick-reply {
+  border: 1px solid @gray-lighter;
+  border-radius: @border-radius-base;
+
+  .panel-body > .form-group {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .panel-quick-reply-footer {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: @line-height-computed;
+
+    .btn {
+      margin-left: floor(@grid-gutter-width / 2);
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xs-max) {
+  .panel-quick-reply {
+    margin-left: @grid-gutter-width * -0.5;
+    margin-right: @grid-gutter-width * -0.5;
+    border-radius: 0;
+    border-width: 1px 0;
+  }
+}

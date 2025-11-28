@@ -1,0 +1,69 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% blocktranslate trimmed with category=target context "admin category roles form" %}
+  {{ category }}: Permissions (deprecated)
+{% endblocktranslate %} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+<small>
+  {{ target }}
+</small>
+{% endblock page-header %}
+
+
+{% block view %}
+{% include "misago/admin/categoryroles/deprecated.html" %}
+
+{{ block.super }}
+{% endblock view %}
+
+
+{% block page-actions %}
+<div class="col-auto page-action">
+  <a href="{% url 'misago:admin:categories:edit' pk=target.pk %}" class="btn btn-primary btn-sm">
+    <span class="fa fa-edit"></span>
+    {% translate "Edit category" context "admin categories" %}
+  </a>
+</div>
+<div class="col-auto page-action">
+  <a href="{{ target.get_absolute_url }}" class="btn btn-primary btn-sm">
+    <span class="fas fa-external-link-alt"></span>
+    {% translate "View on site" context "admin categories" %}
+  </a>
+</div>
+{% endblock %}
+
+
+{% block form-header %}
+{% translate "Change permissions (deprecated)" context "admin category roles form" %}
+{% endblock form-header %}
+
+
+{% block form-body %}
+  {% for form in forms %}
+    <div class="form-group row">
+      <label for="{{ form.category_role.id_for_label }}" class="col-sm-4 col-form-label">
+        {{ form.role }}:
+      </label>
+      <div class="col-sm-8">
+        {% form_input form.category_role %}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock form-body %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+  window.misago.initConfirmation(
+    "[data-cancel-confirmation]",
+    "{% translate 'Are you sure you want to abandon changes?' context 'admin category roles form' %}"
+  )
+</script>
+{% endblock %}

@@ -1,0 +1,240 @@
+//
+// Inputs
+// --------------------------------------------------
+
+// Textarea
+textarea.form-control {
+  resize: vertical;
+}
+
+.field-sizing-content {
+  field-sizing: content;
+  min-height: @line-height-computed * 5;
+}
+
+// Hidden file input
+input.hidden-file-upload {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+// Search field
+.form-search {
+  position: relative;
+
+  .form-control {
+    padding-right: 30px;
+  }
+
+  .material-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    color: @gray-light;
+    font-size: 24px;
+    line-height: 24px;
+
+    pointer-events: none;
+  }
+}
+
+.form-control-checkbox,
+.form-control-checkbox-inline {
+  label {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 0;
+    padding-left: 20px;
+
+    font-weight: normal;
+    vertical-align: middle;
+
+    cursor: pointer;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.form-control-checkbox + .form-control-checkbox,
+.form-control-checkbox-inline + .form-control-checkbox-inline {
+  margin-top: 4px;
+}
+
+@media screen and (min-width: 800px) {
+  .form-control-checkbox {
+    margin-top: 0;
+  }
+
+  .form-control-checkbox-inline {
+    display: inline-block;
+    margin-top: 0;
+    margin-right: ceil(@grid-gutter-width / 2);
+  }
+}
+
+// Reply thread field
+.form-control-post {
+  resize: none;
+  min-height: 200px;
+}
+
+@media screen and (min-height: 800px) {
+  .form-control-post.form-control-post-lg {
+    min-height: 300px;
+  }
+}
+
+@media screen and (min-height: 1000px) {
+  .form-control-post.form-control-post-lg {
+    min-height: 400px;
+  }
+}
+
+// Poll choices
+.form-control-poll-choices {
+  display: flex;
+  flex-direction: column;
+  gap: ceil(@grid-gutter-width / 2);
+  padding-left: 24px;
+}
+
+// Form chips
+.form-chips-control {
+  display: flex;
+  gap: @padding-base-vertical;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+  min-height: @input-height-base;
+  padding: @padding-base-vertical @padding-base-horizontal;
+
+  background-color: @input-bg;
+  border-color: @input-border;
+  border-radius: @input-border-radius;
+
+  color: @input-color;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+
+  &.focused {
+    border-color: @input-border-focus;
+  }
+
+  li {
+    display: block;
+    flex-shrink: 0;
+
+    max-width: 100%;
+
+    list-style: none;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  li:last-child {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+.has-error .form-chips-control {
+  border-color: @state-danger-border;
+
+  &.focused {
+    border-color: lighten(@state-danger-border, 20%);
+  }
+}
+
+.has-success .form-chips-control {
+  border-color: @state-success-border;
+
+  &.focused {
+    border-color: lighten(@state-success-border, 20%);
+  }
+}
+
+.form-chips-control-item,
+.form-chips-control-item-not-found {
+  display: flex;
+  align-items: center;
+
+  max-width: 100%;
+  height: (@input-height-base - (@padding-base-vertical * 2));
+  padding: 0 4px 0 2px;
+
+  background-color: @gray-lighter;
+  border: none;
+  border-radius: @border-radius-small;
+  font-weight: bold;
+}
+
+.form-chips-control-item-image {
+  width: (@input-height-base - (@padding-base-vertical * 2) - 4px);
+  height: (@input-height-base - (@padding-base-vertical * 2) - 4px);
+  margin-right: 4px;
+
+  border-radius: @border-radius-small;
+}
+
+.form-chips-control-item-not-found-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: (@input-height-base - (@padding-base-vertical * 2) - 4px);
+  height: (@input-height-base - (@padding-base-vertical * 2) - 4px);
+  margin-right: 4px;
+
+  color: @gray-light;
+  font-size: 18px;
+  line-height: 0;
+}
+
+.form-chips-control-item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.form-chips-control-item-close-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+
+  color: @gray-light;
+  font-size: 18px;
+  line-height: 0;
+}
+
+.form-chips-control-input {
+  height: (@input-height-base - (@padding-base-vertical * 2));
+  padding: 0;
+  width: 100%;
+
+  background-color: transparent;
+  border: none;
+
+  color: @input-color;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+
+  &:focus {
+    outline: none;
+  }
+}

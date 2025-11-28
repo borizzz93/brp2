@@ -1,0 +1,199 @@
+//
+// Misago Navbar
+// --------------------------------------------------
+
+// Navbar layout
+.navbar {
+  position: sticky;
+  top: 0;
+  height: @navbar-height;
+  z-index: @zindex-navbar-fixed;
+
+  background-color: @navbar-bg;
+  border-bottom: 1px solid @navbar-border;
+  color: @navbar-color;
+}
+
+.navbar-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-left: auto;
+}
+
+// Branding
+.navbar-branding {
+  display: flex;
+  align-items: center;
+  margin-right: @navbar-gutter;
+}
+
+.navbar-branding-text {
+  &,
+  &:link,
+  &:visited,
+  &:hover,
+  &:focus,
+  &:active {
+    color: @navbar-branding-text-color;
+    font-size: @navbar-branding-text-size;
+    text-decoration: none;
+  }
+}
+
+.navbar-branding-logo img {
+  height: @navbar-logo-height;
+}
+
+.navbar-branding-logo-xs {
+  margin-right: @navbar-gutter-half;
+
+  img {
+    height: @navbar-logo-xs-height;
+    width: @navbar-logo-xs-height;
+  }
+}
+
+// Extra items set by forum admin
+.navbar-extra-menu {
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  font-size: @navbar-font-size;
+
+  & > li,
+  & > li > a {
+    display: inline-block;
+  }
+
+  a,
+  a:link,
+  a:visited {
+    padding: @navbar-link-padding;
+
+    border-radius: @navbar-link-border-radius;
+    color: @navbar-link-color;
+  }
+
+  a:hover,
+  a:focus {
+    color: @navbar-link-active-color;
+    text-decoration: none;
+  }
+
+  a:active {
+    color: @navbar-link-active-color;
+    background-color: @navbar-link-active-bg;
+    text-decoration: none;
+  }
+}
+
+// Navbar icon button
+.btn.btn-navbar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: @navbar-btn-size;
+  height: @navbar-btn-size;
+  position: relative;
+  margin-left: @navbar-gutter-half;
+  padding: 0;
+
+  .material-icon {
+    margin: 0;
+
+    font-size: @navbar-btn-icon-size;
+    line-height: @navbar-btn-icon-size;
+  }
+
+  &,
+  &:link,
+  &:visited,
+  &:hover,
+  &:focus {
+    color: @navbar-btn-color;
+    background-color: @navbar-btn-bg;
+    border-color: @navbar-btn-bg;
+    box-shadow: none;
+  }
+
+  &:active,
+  &.active {
+    color: @navbar-btn-active-color;
+    background-color: @navbar-btn-active-bg;
+    border-color: @navbar-btn-active-bg;
+    box-shadow: none;
+  }
+}
+
+// Image buttons
+.btn-navbar-image {
+  display: inline-block;
+  padding: 0;
+  margin-left: @navbar-gutter-half;
+
+  img {
+    width: @navbar-btn-size;
+    height: @navbar-btn-size;
+
+    border-radius: @border-radius-small;
+  }
+}
+
+// Badge (small number on red color)
+.navbar-item-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+
+  padding: 0 5px;
+
+  background-color: @navbar-item-badge-bg;
+  border-radius: 4px;
+  color: @navbar-item-badge-color;
+  font-size: @font-size-small;
+  z-index: 2;
+}
+
+// Auth buttons
+.btn-navbar-sign-in,
+.btn-navbar-register {
+  margin-left: @navbar-gutter-half;
+}
+
+// Hide some items on small displays (mobile only)
+@media screen and (max-width: @screen-xs-max) {
+  #navbar-notifications-dropdown,
+  #navbar-private-threads,
+  #navbar-search-dropdown,
+  #navbar-site-nav-dropdown,
+  #navbar-user-nav-dropdown,
+  .navbar-extra-menu,
+  .btn-navbar-sign-in,
+  .btn-navbar-register {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  #navbar-private-threads {
+    display: none;
+  }
+}
+
+// Hide some items on large displays (tablets and up)
+@media screen and (min-width: @screen-sm-min) {
+  #navbar-notifications-overlay,
+  #navbar-search-overlay,
+  #navbar-site-nav-overlay,
+  #navbar-user-nav-overlay {
+    display: none;
+  }
+}

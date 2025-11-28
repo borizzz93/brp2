@@ -1,0 +1,18 @@
+{% load misago_admin_form %}
+{% if field|is_yesno_switch_field %}
+  {% for option in widget|get_options %}
+    <label class="radio">
+      <input type="{{ option.type }}" name="{{ option.name }}"{% if option.value != None %} value="{{ option.value|stringformat:'s' }}"{% endif %} {% render_attrs option.attrs %} {% render_bool_attrs option.attrs %}>
+      {{ option.label }}
+    </label>
+  {% endfor %}
+{% else %}
+  {% for option in widget|get_options %}
+    <div class="form-check">
+      <input class="form-check-input" name="{{ option.name }}" type="radio"{% if option.value != None %} value="{{ option.value|stringformat:'s' }}"{% endif %} {% render_attrs option.attrs %} {% render_bool_attrs option.attrs %}>
+      <label class="form-check-label" for="{{ option.attrs.id }}">
+        {{ option.label }}
+      </label>
+    </div>
+  {% endfor %}
+{% endif %}

@@ -1,0 +1,63 @@
+{% extends "misago/profile/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Followers" context "user profile page followers" %} | {{ block.super }}{% endblock %}
+
+
+{% block og-title %}{% translate "Followers" context "user profile page followers" %} | {{ block.super }}{% endblock %}
+{% block twitter-title %}{% translate "Followers" context "user profile page followers" %} | {{ block.super }}{% endblock %}
+
+
+{% block section %}
+<div class="profile-followers">
+
+  <nav class="toolbar">
+    <div class="toolbar-section toolbar-section-auto">
+      <div class="toolbar-item">
+        <h3>
+          {% if is_authenticated_user %}
+            {% blocktranslate trimmed count users=count context "user profile page followers" %}
+              You have {{ users }} follower.
+            {% plural %}
+              You have {{ users }} followers.
+            {% endblocktranslate %}
+          {% else %}
+            {% blocktranslate trimmed count users=count with username=profile context "user profile page followers" %}
+              {{ username }} has {{ users }} follower.
+            {% plural %}
+              {{ username }} has {{ users }} followers.
+            {% endblocktranslate %}
+          {% endif %}
+        </h3>
+      </div>
+    </div>
+  </nav>
+
+  {% if count %}
+    <div class="users-cards-list ui-ready" itemscope itemtype="http://schema.org/ItemList">
+      <div class="row">
+        {% for user in followers %}
+          <div class="col-xs-12 col-sm-4" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            {% include "misago/userslists/usercard.html" with user=user %}
+            <meta itemprop="position" content="{{ forloop.counter }}" />
+          </div>
+        {% endfor %}
+      </div>
+      <meta itemprop="numberOfItems" content="{{ count }}">
+      <meta itemprop="itemListOrder" content="http://schema.org/ItemListOrderAscending">
+    </div>
+  {% else %}
+    <p class="lead">
+      {% if is_authenticated_user %}
+        {% translate "You have no followers." context "user profile page followers" %}
+      {% else %}
+        {% blocktranslate trimmed with username=profile.username context "user profile page followers" %}
+          {{ username }} has no followers.
+        {% endblocktranslate %}
+      {% endif %}
+    </p>
+  {% endif %}
+
+</div>
+{% endblock section %}

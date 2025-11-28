@@ -1,0 +1,103 @@
+{% extends "misago/base.html" %}
+{% load i18n misago_absoluteurl misago_plugins misago_shorthands %}
+
+
+{% block title %}
+  {% if is_index %}
+    {{ settings.index_title|default:settings.forum_name }}
+  {% else %}
+    {% translate "Categories" context "categories page" %} | {{ block.super }}
+  {% endif %}
+{% endblock title %}
+
+
+{% block meta-description %}
+  {% if is_index  %}
+    {% blocktranslate trimmed count categories=categories_list|length with forum_name=settings.forum_name context "categories page" %}
+      There is {{ categories }} main category currenty available on the {{ forum_name }}.
+    {% plural %}
+      There are {{ categories }} main categories currenty available on the {{ forum_name }}.
+    {% endblocktranslate %}
+  {% elif settings.index_meta_description %}
+    {{ settings.index_meta_description }}
+  {% endif %}
+{% endblock meta-description %}
+
+
+{% block og-title %}
+  {% if THREADS_ON_INDEX %}
+    {% translate "Categories" context "categories page" %}
+  {% else %}
+    {{ settings.index_title|default:settings.forum_name }}
+  {% endif %}
+{% endblock og-title %}
+
+
+{% block twitter-title %}
+  {% if THREADS_ON_INDEX %}
+    {% translate "Categories" context "categories page" %}
+  {% else %}
+    {{ settings.index_title|default:settings.forum_name }}
+  {% endif %}
+{% endblock twitter-title %}
+
+
+{% block og-description %}
+  {% if not THREADS_ON_INDEX and settings.index_meta_description %}
+    {{ settings.index_meta_description }}
+  {% else %}
+    {% blocktranslate trimmed count categories=categories_list|length with forum_name=settings.forum_name context "categories page" %}
+      There is {{ categories }} main category currenty available on the {{ forum_name }}.
+    {% plural %}
+      There are {{ categories }} main categories currenty available on the {{ forum_name }}.
+    {% endblocktranslate %}
+  {% endif %}
+{% endblock og-description %}
+
+
+{% block twitter-description %}
+  {% if not THREADS_ON_INDEX and settings.index_meta_description %}
+    {{ settings.index_meta_description }}
+  {% else %}
+    {% blocktranslate trimmed count categories=categories_list|length with forum_name=settings.forum_name context "categories page" %}
+      There is {{ categories }} main category currenty available on the {{ forum_name }}.
+    {% plural %}
+      There are {{ categories }} main categories currenty available on the {{ forum_name }}.
+    {% endblocktranslate %}
+  {% endif %}
+{% endblock twitter-description %}
+
+
+{% block og-url %}{% absoluteurl request_path %}{% endblock %}
+{% block twitter-url %}{% absoluteurl request_path %}{% endblock %}
+
+
+{% block content %}
+<div class="page page-categories{{ categories|iffalse:' page-message' }}">
+  {% if is_index %}
+    {% include "misago/index_header.html" %}
+  {% else %}
+    {% include "misago/categories/header.html" %}
+  {% endif %}
+
+  <div class="container page-container">
+
+    {% pluginoutlet CATEGORIES_LIST_START %}
+
+    <div id="misago-page-scroll-target" class="scroll-target"></div>
+    {% include "misago/categories/partial.html" %}
+
+    {% pluginoutlet CATEGORIES_LIST_END %}
+
+    {% include "misago/gototop_toolbar.html" %}
+
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block modals %}
+{% if user.is_authenticated %}
+  {% include "misago/categories/mark_as_read_modal.html" %}
+{% endif %}
+{% endblock modals %}

@@ -1,0 +1,100 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% if target.pk %}
+  {{ target }}
+{% else %}
+  {% translate "New category" context "admin category form" %}
+{% endif %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+{% if target.pk %}
+  <small>
+    {{ target }}
+  </small>
+{% endif %}
+{% endblock page-header %}
+
+
+{% block page-actions %}
+{% if target.pk %}
+  <div class="col-auto page-action">
+    <a href="{% url 'misago:admin:categories:permissions' pk=target.pk %}" class="btn btn-primary btn-sm">
+      <span class="fa fa-adjust"></span>
+      {% translate "Change permissions" context "admin categories" %}
+    </a>
+  </div>
+  <div class="col-auto page-action">
+    <a href="{{ target.get_absolute_url }}" class="btn btn-primary btn-sm">
+      <span class="fas fa-external-link-alt"></span>
+      {% translate "View on site" context "admin categories" %}
+    </a>
+  </div>
+{% endif %}
+{% endblock %}
+
+
+{% block form-header %}
+{% if target.pk %}
+  {% translate "Edit category" context "admin category form" %}
+{% else %}
+  {% translate "New category" context "admin category form" %}
+{% endif %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Display and position" context "admin category form" %}</legend>
+
+    {% form_row form.new_parent %}
+    {% form_row form.name %}
+    {% form_row form.short_name %}
+    {% form_row form.color %}
+    {% form_row form.description %}
+    {% form_row form.css_class %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Behavior" context "admin category form" %}</legend>
+
+    {% form_row form.copy_permissions %}
+    {% form_row form.allow_polls %}
+    {% form_row form.delay_browse_check %}
+    {% form_row form.show_started_only %}
+    {% form_row form.is_closed %}
+    {% form_row form.is_vanilla %}
+    {% form_row form.list_children_threads %}
+    {% form_row form.children_categories_component %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Content approval" context "admin category form" %}</legend>
+
+    {% form_row form.require_threads_approval %}
+    {% form_row form.require_replies_approval %}
+    {% form_row form.require_edits_approval %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Prune threads" context "admin category form" %}</legend>
+
+    {% form_row form.prune_started_after %}
+    {% form_row form.prune_replied_after %}
+    {% form_row form.archive_pruned_in %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

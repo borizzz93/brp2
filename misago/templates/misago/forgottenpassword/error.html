@@ -1,0 +1,40 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}
+{% if user.is_authenticated and not user.has_usable_password %}
+  {% translate "Set new password error" context "set new password error page" %} | {{ block.super }}
+{% else %}
+  {% translate "Change forgotten password error" context "forgotten password error page" %} | {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-forgotten-password-error">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">info_outline</span>
+      </div>
+
+      <div class="message-body">
+        {% if user.is_authenticated and not user.has_usable_password %}
+          <p class="lead">{% translate "Can't set new password." context "set new password error page" %}</p>
+        {% else %}
+          <p class="lead">{% translate "Can't change forgotten password." context "forgotten password error page" %}</p>
+        {% endif %}
+        <p>{{ message }}</p>
+        <p>
+          <a href="{% url 'misago:forgotten-password' %}">
+            {% translate "Request another password change link." context "forgotten password error page cta" %}
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

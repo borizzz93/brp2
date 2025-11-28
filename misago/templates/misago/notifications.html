@@ -1,0 +1,53 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Notifications" context "notifications page" %} | {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div class="page page-notifications">
+  <div class="container page-header-container">
+    <div class="page-header page-header-notifications">
+      <div class="page-header-bg-image">
+        <div class="page-header-bg-overlay">
+          <div class="page-header-image"></div>
+          <div class="page-header-banner page-header-banner-notifications">
+            <div class="page-header-banner-bg-image">
+              <div class="page-header-banner-bg-overlay">
+                <h1>{% translate "Notifications" context "notifications page" %}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <noscript>
+    <div class="container page-container">
+      <div class="message-panel">
+
+        <div class="message-icon">
+          <span class="material-icon">code</span>
+        </div>
+
+        <div class="message-body">
+          <p class="lead">{% translate "Enable JavaScript" context "notifications page" %}</p>
+          <p>{% translate "You need to enable JavaScript in your browser to see your notifications." context "notifications page" %}</p>
+        </div>
+
+      </div>
+    </div>
+  </noscript>
+  <div class="container page-container page-placeholder hidden">
+    <div class="lead lead-placeholder">
+      <p>{% translate "Loading..." context "notifications page" %}</p>
+    </div>
+  </div>
+  <script type="text/javascript">
+    const lead = document.querySelectorAll('.page-placeholder')[0]
+    if (lead) lead.classList.remove("hidden");
+  </script>
+</div>
+{% endblock content %}

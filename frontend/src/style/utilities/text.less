@@ -1,0 +1,117 @@
+.text-sm {
+  font-size: @font-size-small;
+}
+
+.text-color {
+  color: @text-color;
+}
+.text-gray-darker {
+  color: @gray-darker;
+}
+.text-gray-dark {
+  color: @gray-dark;
+}
+.text-gray {
+  color: @gray;
+}
+.text-gray-light {
+  color: @gray-light;
+}
+.text-gray-lighter {
+  color: @gray-lighter;
+}
+
+.link-text-color {
+  &,
+  &:active &:focus,
+  &:hover,
+  &:link,
+  &:visited {
+    color: @text-color;
+  }
+}
+
+.link-gray-darker {
+  &,
+  &:link,
+  &:visited {
+    color: @gray-darker;
+  }
+
+  &:active &:focus,
+  &:hover {
+    color: @text-color;
+  }
+}
+
+.link-gray-dark {
+  &,
+  &:link,
+  &:visited {
+    color: @gray-dark;
+  }
+
+  &:active &:focus,
+  &:hover {
+    color: @text-color;
+  }
+}
+
+.link-gray {
+  &,
+  &:link,
+  &:visited {
+    color: @gray;
+  }
+
+  &:active &:focus,
+  &:hover {
+    color: @text-color;
+  }
+}
+
+.link-gray-light {
+  &,
+  &:link,
+  &:visited {
+    color: @gray-light;
+  }
+
+  &:active &:focus,
+  &:hover {
+    color: @text-color;
+  }
+}
+
+.text-base {
+  font-size: @font-size-base;
+  line-height: @line-height-computed;
+}
+
+.text-lg {
+  font-size: @font-size-large;
+  line-height: @line-height-computed;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}

@@ -1,0 +1,80 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% if target.pk %}
+  {{ target }}
+{% else %}
+  {% translate "New rank" context "admin rank form" %}
+{% endif %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+{% if target.pk %}
+  <small>
+    {{ target }}
+  </small>
+{% endif %}
+{% endblock page-header %}
+
+
+{% block page-actions %}
+{% if target.pk and target.is_tab %}
+  <div class="col-auto page-action">
+    <a href="{{ target.get_absolute_url }}" class="btn btn-primary btn-sm">
+      <span class="fas fa-external-link-alt"></span>
+      {% translate "View on site" context "admin ranks" %}
+    </a>
+  </div>
+{% endif %}
+{% endblock %}
+
+
+{% block view %}
+{% include "misago/admin/ranks/deprecated.html" %}
+
+{{ block.super }}
+{% endblock view %}
+
+
+{% block form-header %}
+{% if target.pk %}
+  {% translate "Edit rank" context "admin rank form" %}
+{% else %}
+  {% translate "New rank" context "admin rank form" %}
+{% endif %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Name and description" context "admin rank form" %}</legend>
+
+    {% form_row form.name %}
+    {% form_row form.title %}
+    {% form_row form.description %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Permissions" context "admin rank form" %}</legend>
+
+    {% form_row form.roles %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Display and visibility" context "admin rank form" %}</legend>
+
+    {% form_row form.css_class %}
+    {% form_row form.is_tab %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

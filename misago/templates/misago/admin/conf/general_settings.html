@@ -1,0 +1,70 @@
+{% extends "misago/admin/conf/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Site details" context "admin general settings form" %}</legend>
+
+    {% form_row form.forum_name %}
+    {% form_row form.forum_address %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Logo" context "admin general settings form" %}</legend>
+
+    {% form_row form.logo_text %}
+    {% with delete_field=form.logo_delete setting=form_settings.logo %}
+      {% form_image_row form.logo delete_field=delete_field size=setting.image_size dimensions=setting.image_dimensions %}
+    {% endwith %}
+    {% with delete_field=form.logo_small_delete setting=form_settings.logo_small %}
+      {% form_image_row form.logo_small delete_field=delete_field size=setting.image_size dimensions=setting.image_dimensions %}
+    {% endwith %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Open Graph image" context "admin general settings form" %}</legend>
+
+    {% with delete_field=form.og_image_delete setting=form_settings.og_image %}
+      {% form_image_row form.og_image delete_field=delete_field size=setting.image_size dimensions=setting.image_dimensions %}
+    {% endwith %}
+    {% form_row form.og_image_avatar_on_profile %}
+    {% form_row form.og_image_avatar_on_thread %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Forum index" context "admin general settings form" %}</legend>
+
+    {% form_row form.index_view %}
+    {% form_row form.index_title %}
+    {% form_row form.index_meta_description %}
+    {% form_row form.index_header %}
+    {% form_row form.index_message %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Forum footnote" context "admin general settings form" %}</legend>
+
+    {% form_row form.forum_footnote %}
+    {% form_row form.email_footer %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Admin Control Panel" context "admin general settings form" %}</legend>
+
+    {% form_row form.show_admin_panel_link_in_ui %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

@@ -1,0 +1,22 @@
+{% extends "misago/base.html" %}
+{% load i18n misago_forms %}
+
+
+{% block title %}
+  {% translate "Edit thread" context "edit thread page" %} | {{ thread }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+<div class="page page-reply-private-thread">
+  {% include "misago/private_thread/header.html" %}
+  {% include template_name_htmx %}
+</div>
+{% endblock content %}
+
+
+{% block modals %}
+  {% include "misago/posting/markup_editor_modals.html" %}
+  {% include "misago/posting/attachment_templates.html" %}
+  {% include "misago/lightbox/index.html" %}
+{% endblock modals %}

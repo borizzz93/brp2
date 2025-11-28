@@ -1,0 +1,60 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% translate "New user" context "admin user form" %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block form-header %}
+{% translate "New user" context "admin user form" %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Basic account settings" context "admin user form" %}</legend>
+
+    {% form_row form.username %}
+
+    {% form_row form.group %}
+    {% form_row form.secondary_groups %}
+
+    {% form_row form.title %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "User permissions (deprecated)" context "admin user form" %}</legend>
+
+    <div class="alert alert-warning" role="alert">
+      <strong>{% translate "Deprecation warning" context "admin user form" %}:</strong>
+      {% blocktranslate trimmed context "admin user form" %}
+      User ranks and roles have been replaced with user groups and moderators and will be removed in a future version of Misago.
+      {% endblocktranslate %}
+    </div>
+
+    {% if 'rank' in form.fields %}
+      {% form_row form.rank %}
+    {% endif %}
+    {% form_row form.roles %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Sign-in credentials" context "admin user form" %}</legend>
+
+    {% form_row form.email %}
+    {% form_row form.new_password %}
+  </fieldset>
+</div>
+{% endblock form-body %}
+
+
+{% block form-footer %}
+<button class="btn btn-primary btn-sm">{% translate "Save user" context "admin user form" %}</button>
+{% endblock form-footer %}

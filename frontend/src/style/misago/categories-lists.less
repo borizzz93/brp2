@@ -1,0 +1,318 @@
+//
+// Categories Lists
+// --------------------------------------------------
+
+// Vanilla category card header
+.list-group-category-vanilla {
+  background-color: @vanilla-category-bg;
+  color: @vanilla-category-color;
+
+  .item-title {
+    &,
+    &:link,
+    &:active,
+    &:visited,
+    &:hover,
+    &:focus {
+      color: @vanilla-category-header;
+      font-weight: 500;
+    }
+  }
+}
+
+.list-group-category-vanilla .list-group-item-heading:last-child {
+  margin: 0;
+}
+
+.list-group-category-vanilla .category-description *:last-child {
+  margin-bottom: 0;
+}
+
+// Category card item
+.list-group-category-item {
+  display: flex;
+  padding-left: 0;
+}
+
+// Category read status
+.list-group-category-item-read-status-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: @category-status-col-width;
+
+  text-align: center;
+}
+
+.list-group-category-item-rest-col {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+// Main column
+.list-group-category-item-main-col {
+  flex: 1;
+  padding-right: floor(@grid-gutter-width / 2);
+}
+
+// Stats
+.list-group-category-item-stats-col {
+  flex-shrink: 0;
+  width: @category-stats-col-width;
+}
+
+// Last thread
+.list-group-category-item-last-thread-col {
+  display: flex;
+  align-items: center;
+  width: @category-last-thread-col-width;
+}
+
+// Category read status
+.list-group-category-item-read-status-col {
+  .material-icon {
+    font-size: 24px;
+    line-height: 24px;
+  }
+
+  .item-read {
+    color: @category-read-color;
+  }
+
+  .item-new {
+    color: @category-new-color;
+  }
+}
+
+// Category name
+.list-group-category-item-name {
+  &,
+  &:link,
+  &:visited {
+    color: @text-color;
+    font-size: @font-size-large;
+    font-weight: 500;
+  }
+}
+
+// Category description
+.list-group-category-item-description {
+  margin-top: 3px;
+
+  color: @category-description-color;
+}
+
+.list-group-category-item-description *:last-child {
+  margin-bottom: 0;
+}
+
+// Category subcategories
+.list-group-category-item-children {
+  margin: -6px;
+  margin-top: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.list-group-category-item-children-item {
+  padding: 6px;
+  display: inline-block;
+}
+
+.list-group-category-child-children-item-name {
+  display: flex;
+  align-items: center;
+
+  &,
+  &:link,
+  &:active,
+  &:visited {
+    color: @category-child-color;
+  }
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: @category-child-active-color;
+  }
+}
+
+.list-group-category-item-children-item .bullet {
+  margin-right: 6px;
+
+  background-color: @category-read-color;
+}
+
+.list-group-category-item-children-item .bullet-new {
+  background-color: @category-new-color;
+}
+
+// Category stats
+.list-group-category-item-stats-col {
+  padding-right: floor(@grid-gutter-width / 2);
+
+  color: @category-stat-color;
+
+  .category-stat-value {
+    color: @category-stat-value-color;
+    font-weight: bold;
+  }
+}
+
+// Last poster avatar
+.list-group-category-item-last-poster-avatar-col {
+  padding-right: floor(@grid-gutter-width / 2);
+}
+
+.list-group-category-item-last-poster-avatar {
+  line-height: 0;
+
+  img {
+    border-radius: @category-last-poster-avatar-radius;
+  }
+}
+
+// Last thread's data
+.list-group-category-item-last-thread-details-col {
+  flex: 1;
+  min-width: 0;
+
+  color: @category-last-thread-details-color;
+}
+
+// Last thread's title
+.list-group-category-item-last-thread-title,
+.list-group-category-item-last-thread-title-muted {
+  display: block;
+
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-group-category-item-last-thread-title {
+  &,
+  &:link,
+  &:active,
+  &:visited,
+  &:hover,
+  &:focus {
+    color: @text-color;
+  }
+}
+
+.list-group-category-item-last-thread-title-muted {
+  color: @category-last-thread-muted-color;
+}
+
+// Last thread's poster and date
+.list-group-category-item-last-poster,
+.list-group-category-item-last-separator,
+.list-group-category-item-last-posted-on {
+  display: inline-block;
+}
+
+.list-group-category-item-last-poster {
+  &,
+  &:link,
+  &:active,
+  &:visited,
+  &:hover,
+  &:focus {
+    color: @text-color;
+  }
+}
+
+.list-group-category-item-last-separator {
+  margin: 0 2px;
+}
+
+.list-group-category-item-last-posted-on,
+.list-group-category-item-last-posted-on-short {
+  &,
+  &:link,
+  &:active,
+  &:visited,
+  &:hover,
+  &:focus {
+    color: @category-last-thread-details-color;
+  }
+}
+
+.list-group-category-item-last-posted-on-short {
+  display: none;
+}
+
+// Last thread text
+.list-group-category-item-last-thread-text {
+  display: flex;
+  align-items: center;
+
+  color: @category-text-color;
+}
+
+.list-group-category-item-last-thread-text-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  margin-right: floor(@grid-gutter-width / 2);
+
+  color: @category-text-icon;
+
+  .material-icon {
+    font-size: 24px;
+    line-height: 24px;
+  }
+}
+
+// Responsiveness
+@media screen and (max-width: @screen-sm-max) {
+  .list-group-category-item-rest-col {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .list-group-category-item-stats-col,
+  .list-group-category-item-last-poster-avatar-col,
+  .list-group-category-item-last-poster,
+  .list-group-category-item-last-separator,
+  .list-group-category-item-last-posted-on {
+    display: none;
+  }
+
+  .list-group-category-item-last-thread-col {
+    display: flex;
+    margin-top: floor(@line-height-computed / 2);
+    padding-right: floor(@grid-gutter-width / 2);
+  }
+
+  .list-group-category-item-last-thread-details-col {
+    display: flex;
+    align-items: center;
+    width: auto;
+  }
+
+  .list-group-category-item-last-thread-title,
+  .list-group-category-item-last-thread-title-muted {
+    display: block;
+
+    font-weight: normal;
+  }
+
+  .list-group-category-item-last-posted-on-short {
+    flex-shrink: 1;
+    display: block;
+    white-space: nowrap;
+    padding-left: floor(@grid-gutter-width / 4);
+  }
+
+  .list-group-category-item-last-thread-text-icon {
+    display: none;
+  }
+}

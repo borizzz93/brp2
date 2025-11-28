@@ -1,0 +1,30 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Activation error" context "account activation page" %} | {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-activation-error">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">info_outline</span>
+      </div>
+
+      <div class="message-body">
+        <p class="lead">{% translate "Can't activate account." context "account activation page" %}</p>
+        <p>{{ message }}</p>
+        <p>
+          <a href="{% url 'misago:request-activation' %}">
+            {% translate "Request another activation link."  context "account activation page" %}
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

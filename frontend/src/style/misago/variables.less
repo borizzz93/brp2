@@ -1,0 +1,585 @@
+//
+// Misago Default Theme Variables
+// --------------------------------------------------
+
+// 'bottom' attribute of scroll targets
+@scroll-target-offset: 80px;
+
+//== Loaders
+//
+//## Loaders appearance and spacing.
+
+//** Full loader size (both width and height)
+@loader-size: 80px;
+//** Loader color
+@loader-color: @gray-light;
+
+//** Ajax indicator
+@ajax-loader-size: 4px;
+@ajax-loader-color: #2563eb;
+
+//** UI preview color
+@ui-preview: @gray-lighter;
+@ui-preview-in: 1;
+@ui-preview-out: 0.1;
+
+@ui-preview-frequency: 1s;
+
+// Sign in button
+@btn-sign-in-color: #fff;
+@btn-sign-in-border: #2563eb;
+@btn-sign-in-bg: #2563eb;
+
+// Register button
+@btn-register-color: #fff;
+@btn-register-border: #2563eb;
+@btn-register-bg: #2563eb;
+
+//== Navbar
+//
+//##
+
+// Basics of a navbar
+@navbar-height: 60px;
+
+@navbar-color: #111827;
+@navbar-bg: #fff;
+@navbar-border: #e5e7eb;
+
+@navbar-gutter: 24px;
+@navbar-gutter-half: 12px;
+
+@navbar-font-size: @font-size-large;
+
+// Navbar branding
+@navbar-branding-text-color: #374151;
+@navbar-branding-text-size: @font-size-large + 4px;
+
+@navbar-logo-height: 40px;
+@navbar-logo-xs-height: 34px;
+
+// Navbar links (custom menu items)
+@navbar-link-border-radius: @border-radius-base;
+@navbar-link-padding: 6px 12px;
+
+@navbar-link-color: @text-color;
+@navbar-link-active-color: @text-color;
+@navbar-link-active-bg: #e5e7eb;
+
+// Navbar icon btn
+
+@navbar-btn-size: 34px;
+@navbar-btn-icon-size: 24px;
+
+@navbar-btn-color: #374151;
+@navbar-btn-bg: transparent;
+
+@navbar-btn-active-color: @text-color;
+@navbar-btn-active-bg: #e5e7eb;
+
+@navbar-item-badge-color: #fff;
+@navbar-item-badge-bg: #dc2626;
+
+// Alerts
+
+@alert-border-radius: 0;
+
+// Snackbars v2
+
+@snackbars-top-offset: @navbar-height + @line-height-computed;
+@snackbars-gutter: @navbar-gutter;
+
+@snackbar-v2-size: @font-size-base;
+@snackbar-v2-padding: 6px 12px;
+@snackbar-v2-border-radius: @border-radius-base;
+
+@snackbar-v2-lg-size: @font-size-large;
+@snackbar-v2-lg-padding: 8px 16px;
+@snackbar-v2-lg-border-radius: @border-radius-base;
+@snackbar-v2-lg-breakpoint: 720px;
+
+@snackbar-v2-bg: #111;
+@snackbar-v2-color: #ffff;
+
+@snackbar-v2-success-bg: #16a34a;
+@snackbar-v2-success-color: #ffff;
+
+@snackbar-v2-warning-bg: #fef08a;
+@snackbar-v2-warning-color: #000;
+
+@snackbar-v2-danger-bg: #dc2626;
+@snackbar-v2-danger-color: #ffff;
+
+//== Overlay
+//
+@overlay-bg: @body-bg;
+@overlay-padding: 6px 12px;
+@overlay-gutter: 12px;
+
+// Header
+@overlay-header-padding: 12px 12px;
+@overlay-header-color: @text-color;
+@overlay-header-size: @font-size-large;
+
+@overlay-header-btn-size: 32px;
+@overlay-header-btn-icon-size: 24px;
+
+@overlay-header-btn-bg: transparent;
+@overlay-header-btn-border: transparent;
+@overlay-header-btn-color: @text-color;
+
+@overlay-header-btn-active-bg: @gray-lighter;
+@overlay-header-btn-active-border: @gray-lighter;
+@overlay-header-btn-active-color: @text-color;
+
+@overlay-menu-link-padding: 6px 12px;
+
+//== Search dialog
+//
+@search-control-font-size: 16px;
+
+//== Pills nav
+//
+@nav-pills-padding-vertical: @padding-small-vertical;
+@nav-pills-padding-horizontal: @padding-small-horizontal;
+
+@nav-pills-bg: @gray-lighter;
+@nav-pills-color: @gray-dark;
+
+@nav-pills-hover-bg: darken(@gray-lighter, 5%);
+@nav-pills-hover-color: @gray-dark;
+
+@nav-pills-active-bg: @gray-dark;
+@nav-pills-active-color: #fff;
+
+//== Tab group nav
+//
+@tab-group-nav-height: 36px;
+@tab-group-nav-gap: ceil(@grid-gutter-width / 4);
+@tab-group-nav-border: @gray-lighter;
+
+@tab-group-nav-item-padding-horizontal: 12px;
+
+@tab-group-nav-item-color: @gray-light;
+@tab-group-nav-item-hover: @gray-dark;
+@tab-group-nav-item-active: @gray-darker;
+
+@tab-group-nav-item-bullet: 8px;
+
+//== Breadcrumbs
+//
+@breadcrumbs-size: @font-size-base;
+@breadcrumbs-gutter: @grid-gutter-width / 2;
+
+@breadcrumbs-color: @gray;
+@breadcrumbs-color-hover: @text-color;
+@breadcrumbs-color-active: @text-color;
+
+//== Error pages
+//
+@message-page-icon-size: 80px;
+
+//== Auth Changed message
+//
+@auth-changed-bg: @gray-lighter;
+@auth-changed-color: @gray-darker;
+
+//== User status colors
+//
+@user-status-banned: @brand-danger;
+@user-status-online: @brand-success;
+@user-status-offline: @gray-light;
+
+// Notifications
+//
+@notification-avatar-height: 30px;
+
+@notification-read-icon-color: @gray-lighter;
+@notification-read-icon-size: 14px;
+@notification-read-icon-border: 2px;
+
+@notification-unread-icon-color: @brand-primary;
+@notification-unread-icon-size: 14px;
+
+@notification-color: @text-color;
+@notification-active-color: @text-color;
+
+@notification-unread-color: @text-color;
+@notification-unread-active-color: @text-color;
+
+//== Auth forms
+
+@auth-form-border: @gray-lighter;
+@auth-form-padding: @grid-gutter-width;
+@auth-form-padding-sm: floor(@grid-gutter-width / 2);
+@auth-form-width: 400px;
+
+//== Confirmation forms
+
+@confirm-form-border: @gray-lighter;
+@confirm-form-padding: @grid-gutter-width;
+@confirm-form-padding-sm: floor(@grid-gutter-width / 2);
+@confirm-form-width: 400px;
+
+//== Vanilla categories header
+//
+//##
+
+@vanilla-category-bg: transparent;
+@vanilla-category-header: @gray-dark;
+@vanilla-category-color: @gray;
+
+//== Categories list
+//
+//##
+
+@category-status-col-width: 56px;
+@category-stats-col-width: 150px;
+@category-last-thread-col-width: 290px;
+
+@category-read-color: #dfe1e6;
+@category-new-color: @brand-primary;
+
+@category-description-color: @gray;
+
+@category-child-color: @gray;
+@category-child-active-color: @text-color;
+
+@category-stat-value-color: @text-color;
+@category-stat-color: @gray;
+
+@category-last-thread-muted-color: @gray;
+@category-last-thread-details-color: @gray;
+@category-last-poster-avatar-radius: @border-radius-base;
+
+@category-text-icon: @gray-light;
+@category-text-color: @gray;
+
+//== Category label colors
+//
+
+@category-label-color: #fff;
+
+@category-label-default-bg: @gray-lighter;
+@category-label-default-color: @gray-dark;
+
+//== Parsed markup size
+//
+@misago-markup-font-size: 16px;
+
+// Moderation
+//
+
+@btn-moderation-color: #fff;
+@btn-moderation-border: #111;
+@btn-moderation-bg: #111;
+
+// Threads list
+//
+
+@thread-avatar-image-size: 30px;
+
+@threads-list-item-animation-color: #b3d4ff;
+
+@thread-read-icon-color: @gray-lighter;
+@thread-read-icon-size: 14px;
+@thread-read-icon-border: 2px;
+
+@thread-unread-icon-color: @brand-primary;
+@thread-unread-icon-size: 14px;
+
+@threads-list-breadcrumbs-breakpoint: 550px;
+
+// Refresh threads list button
+@btn-threads-list-poll-color: #2563eb;
+@btn-threads-list-poll-border: @list-group-border;
+@btn-threads-list-poll-bg: #fff;
+
+// Used to align icon with title on small screens
+@thread-read-icon-offset-top: 4px;
+@thread-read-icon-offset-right: 4px;
+
+@threads-list-title-size: 16px;
+@threads-list-title-size-sm: 18px;
+
+@thread-color: @text-color;
+@thread-new-color: @text-color;
+
+@thread-goto-page-link-font-size: 13px;
+@thread-goto-page-link-padding: 3px 12px;
+@thread-goto-page-link-gutter: 8px;
+@thread-goto-page-link-margin: 12px;
+
+@thread-goto-page-link-color: @text-color;
+@thread-goto-page-link-bg: transparent;
+@thread-goto-page-link-border: @gray-lighter;
+
+@thread-goto-page-link-active-color: @text-color;
+@thread-goto-page-link-active-bg: @gray-lighter;
+@thread-goto-page-link-active-border: @thread-goto-page-link-active-bg;
+
+@thread-flag-block-size: 22px;
+@thread-flag-icon-size: 16px;
+
+@thread-flag-icon-opacity: 0.8;
+@thread-flag-icon-opacity-hover: 1;
+
+@thread-flag-pinned-globally-bg: #dbeafe;
+@thread-flag-pinned-globally-color: #2563eb;
+
+@thread-flag-pinned-locally-bg: #dbeafe;
+@thread-flag-pinned-locally-color: #3b82f6;
+
+@thread-flag-pinned-locally-elsewhere-bg: #e2e8f0;
+@thread-flag-pinned-locally-elsewhere-color: #64748b;
+
+@thread-flag-answered-bg: #d9f99d;
+@thread-flag-answered-color: #4d7c0f;
+
+@thread-flag-poll-bg: #f5d0fe;
+@thread-flag-poll-color: #c026d3;
+
+@thread-flag-unapproved-bg: #ef4444;
+@thread-flag-unapproved-color: #ffffff;
+
+@thread-flag-closed-bg: #fecaca;
+@thread-flag-closed-color: #dc2626;
+
+@thread-flag-hidden-bg: #64748b;
+@thread-flag-hidden-color: #ffffff;
+
+@thread-replies-color: @gray;
+@thread-replies-size: 16px;
+@thread-replies-size-xs: 13px;
+
+@thread-last-activity-color: @gray-dark;
+@thread-last-activity-size: 16px;
+@thread-last-activity-size-xs: 13px;
+
+//== Poll
+@poll-choice-name-width: 220px;
+@poll-choice-votes-width: 180px;
+
+//== Posts list
+//
+
+@posts-feed-item-animation-color: #b3d4ff;
+
+@post-side-width: 260px;
+@post-side-padding: @grid-gutter-width / 2;
+
+@post-avatar-size: 100px;
+
+@thread-update-icon-bg: @gray-lighter;
+@thread-update-icon-color: @gray-dark;
+
+@thread-update-description-color: @gray-dark;
+@thread-update-context-color: #000;
+@thread-update-separator-color: @gray-light;
+@thread-update-timestamp-color: @gray;
+
+@thread-update-hidden-label-bg: @gray-light;
+@thread-update-hidden-label-color: #fff;
+
+@thread-update-btn-color: @gray;
+@thread-update-btn-hover-color: @gray-darker;
+@thread-update-btn-active-color: @gray-darker;
+
+//== User profile header
+
+@profile-header-avatar-offset: @line-height-computed + 34px;
+
+//== Thread paginator
+
+@thread-paginator-gutter: 6px;
+
+@thread-paginator-dropdown-padding: 4px;
+@thread-paginator-dropdown-width: 150px;
+
+@thread-paginator-input-text-size: 16px;
+
+//== Quote toolbar
+//
+
+@quote-toolbar-bg: transparent;
+
+@quote-toolbar-btn-bg: fadeOut(#333, 10);
+@quote-toolbar-btn-color: #eee;
+
+@quote-toolbar-btn-hover-bg: #555;
+@quote-toolbar-btn-hover-color: #fff;
+
+@quote-toolbar-btn-active-bg: #111;
+@quote-toolbar-btn-active-color: #fff;
+
+//== Posting dialog
+//
+
+@posting-dialog-max-width: 1240px;
+
+@posting-dialog-padding-vertical: @padding-base-vertical;
+@posting-dialog-padding-horizontal: @padding-base-horizontal;
+@posting-dialog-padding-xs: @padding-base-vertical;
+
+@posting-dialog-bg: #fff;
+@posting-dialog-border: @gray-lighter;
+@posting-dialog-radius: @border-radius-base;
+
+@posting-dialog-shadow: 0 0 24px fadeOut(@gray, 75);
+
+@posting-dialog-caption-color: @text-color;
+@posting-dialog-caption-size: @font-size-large;
+
+@posting-dialog-btn-size: 32px;
+@posting-dialog-btn-icon-size: 24px;
+
+@posting-dialog-btn-bg: transparent;
+@posting-dialog-btn-border: transparent;
+@posting-dialog-btn-color: @text-color;
+
+@posting-dialog-btn-active-bg: @gray-lighter;
+@posting-dialog-btn-active-border: @gray-lighter;
+@posting-dialog-btn-active-color: @text-color;
+
+//== Markup editor
+
+@markup-editor-height: 200px;
+@markup-editor-padding: floor(@grid-gutter-width / 2);
+@markup-editor-padding-horizontal: floor(@grid-gutter-width / 2);
+
+@markup-editor-bg: @input-bg;
+@markup-editor-border-color: @input-border;
+@markup-editor-border-focus: @brand-primary;
+@markup-editor-font-size: @misago-markup-font-size;
+
+@markup-editor-toolbar-padding: floor(@grid-gutter-width / 4);
+@markup-editor-toolbar-bg: #fff;
+@markup-editor-toolbar-border-color: @gray-lighter;
+
+@markup-editor-toolbar-secondary-padding: 2px;
+@markup-editor-toolbar-secondary-bg: #f7f7f7;
+@markup-editor-toolbar-secondary-border-color: @gray-lighter;
+
+@markup-editor-btn-size: 34px;
+@markup-editor-btn-icon-size: 24px;
+
+@markup-editor-btn-bg: transparent;
+@markup-editor-btn-border: transparent;
+@markup-editor-btn-color: @text-color;
+
+@markup-editor-btn-active-bg: @gray-lighter;
+@markup-editor-btn-active-border: @gray-lighter;
+@markup-editor-btn-active-color: @text-color;
+
+@markup-editor-drag-drop-bg: #e0ecff;
+
+@markup-editor-attachment-border-color: @gray-lighter;
+
+@markup-editor-attachments-bg: #fff;
+@markup-editor-attachments-border-color: @gray-lighter;
+
+//== RichText elements
+
+@rich-text-quote-padding: 12px;
+
+@rich-text-quote-border: #e3e8f0;
+
+@rich-text-quote-header-bg: #f2f5f9;
+@rich-text-quote-header-color: #1f283b;
+
+@rich-text-quote-header-link: #1f283b;
+@rich-text-quote-header-link-secondary: #1f283b;
+@rich-text-quote-header-timestamp: #48556a;
+@rich-text-quote-header-separator: #ccd5e1;
+
+@rich-text-quote-header-btn-bg: transparent;
+@rich-text-quote-header-btn-border: transparent;
+@rich-text-quote-header-btn-color: #1f283b;
+
+@rich-text-quote-header-btn-hover-bg: #ccd5e1;
+@rich-text-quote-header-btn-hover-border: #ccd5e1;
+@rich-text-quote-header-btn-hover-color: #1f283b;
+
+@rich-text-quote-header-btn-active-bg: #1f283b;
+@rich-text-quote-header-btn-active-border: #1f283b;
+@rich-text-quote-header-btn-active-color: #fff;
+
+@rich-text-quote-body-bg: #fff;
+
+@rich-text-code-padding: 12px;
+@rich-text-code-bg: #ebecf0;
+
+@rich-text-code-header-bg: #ebecf0;
+@rich-text-code-header-color: #42526e;
+
+@rich-text-code-btn-border: #c1c7d0;
+@rich-text-code-btn-bg: transparent;
+@rich-text-code-btn-color: #42526e;
+
+@rich-text-code-btn-hover-border: #7a869a;
+@rich-text-code-btn-hover-bg: transparent;
+@rich-text-code-btn-hover-color: #253858;
+
+@rich-text-code-btn-active-border: #42526e;
+@rich-text-code-btn-active-bg: #42526e;
+@rich-text-code-btn-active-color: #fff;
+
+@rich-text-spoiler-padding: 12px;
+
+@rich-text-spoiler-bg: #f2f5f9;
+@rich-text-spoiler-bg-alt: #ccd5e1;
+
+@rich-text-spoiler-header-bg: #f2f5f9;
+@rich-text-spoiler-header-color: #1f283b;
+
+@rich-text-spoiler-toggle-bg: #93a1b7;
+@rich-text-spoiler-toggle-color: #fff;
+
+@rich-text-spoiler-body-bg: #fff;
+@rich-text-spoiler-body-border: #e3e8f0;
+
+//== User autocomplete popup
+
+@autocomplete-user-popup-bg: #fff;
+
+@autocomplete-user-popup-choice-bg: #fff;
+@autocomplete-user-popup-choice-color: @text-color;
+
+@autocomplete-user-popup-choice-hover-bg: @gray-lighter;
+@autocomplete-user-popup-choice-hover-color: @text-color;
+
+@autocomplete-user-popup-choice-active-bg: @brand-primary;
+@autocomplete-user-popup-choice-active-color: #fff;
+
+//== Dropdown height offset used in calc()
+@dropdown-height-offset: @navbar-height + @line-height-computed;
+
+//-- Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+//
+// Note: These variables are not generated into the Customizer.
+
+@zindex-navbar: 1000;
+@zindex-dropdown: 1000;
+@zindex-popover: 1060;
+@zindex-tooltip: 1070;
+@zindex-quote-toolbar: 1020;
+@zindex-navbar-fixed: 1030;
+@zindex-overlay: 1035;
+@zindex-modal-background: 1040;
+@zindex-modal: 1050;
+@zindex-autocomplete-popup: 1070;
+@zindex-auth-message: 1080;
+@zindex-ajax-loader: 1090;
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+// Navbar collapse
+//** Point at which the navbar becomes uncollapsed.
+@grid-float-breakpoint: 700px;
+//** Point at which the navbar begins collapsing.
+@grid-float-breakpoint-max: (@grid-float-breakpoint - 1);

@@ -1,0 +1,65 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% if target.pk %}
+{% translate target.banned_value %}
+{% else %}
+{% translate "New ban" context "admin ban form" %}
+{% endif %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+{% if target.pk %}
+  <small>
+    {{ target.banned_value }}
+  </small>
+{% endif %}
+{% endblock page-header %}
+
+
+{% block form-header %}
+{% if target.pk %}
+  {% translate "Edit ban" context "admin ban form" %}
+{% else %}
+  {% translate "New ban" context "admin ban form" %}
+{% endif %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Ban settings" context "admin ban form" %}</legend>
+
+    {% form_row form.check_type %}
+    {% form_row form.banned_value %}
+    {% form_row form.registration_only %}
+    {% form_row form.expires_on %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Messages" context "admin ban form" %}</legend>
+
+    {% form_row form.user_message %}
+    {% form_row form.staff_message %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+  window.misago.initDatepicker({
+    elementId: "id_expires_on",
+    never: "{% translate 'Never' context 'admin ban expires choice' %}",
+    setDate: "{% translate 'Set date' context 'admin ban expires choice' %}"
+  })
+</script>
+{% endblock %}

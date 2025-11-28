@@ -1,0 +1,12 @@
+{% load misago_admin_form %}
+{% if field|is_multiple_choice_field %}
+  {% include "misago/admin/form/multiple_choice.html" %}
+{% elif field|is_radio_select_field %}
+  {% include "misago/admin/form/radio_select.html" %}
+{% elif field|is_select_field %}
+  {% include "misago/admin/form/select.html" %}
+{% elif field|is_textarea_field %}
+  <textarea {% render_attrs widget.attrs class_name="form-control" %} name="{{ widget.name }}" {% render_bool_attrs widget.attrs %}>{% if widget.value != None %}{{ widget.value|stringformat:'s' }}{% endif %}</textarea>
+{% else %}
+  <input {% render_attrs widget.attrs class_name="form-control" %} name="{{ widget.name }}" type="{{ widget.type }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %} {% render_bool_attrs widget.attrs %}>
+{% endif %}

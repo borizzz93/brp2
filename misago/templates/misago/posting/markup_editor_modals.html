@@ -1,0 +1,217 @@
+{% load i18n %}
+
+<div
+  id="markup-editor-link-modal"
+  class="modal fade"
+  aria-hidden="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog" role="document">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' context 'modal' %}"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">
+            {% translate "Insert link" context "markup editor link modal" %}
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label" for="markup_link_url">
+              {% translate "Link address:" context "markup editor link modal" %}
+            </label>
+            <input type="text" id="markup_link_url" name="url" class="form-control" value="" required>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="markup_link_text">
+              {% translate "Link text:" context "markup editor link modal" %}
+            </label>
+            <div>
+              <input type="text" id="markup_link_text" name="text" class="form-control" value="">
+              <p class="help-block">
+                {% blocktranslate trimmed context "markup editor link modal" %}
+                  Optional. Will be displayed instead of link's address.
+                {% endblocktranslate %}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            {% translate "Cancel" context "markup editor modal btn" %}
+          </button>
+          <button class="btn btn-primary">
+            {% translate "Insert link" context "markup editor link modal btn" %}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  id="markup-editor-image-modal"
+  class="modal fade"
+  aria-hidden="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog" role="document">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' context 'modal' %}"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">
+            {% translate "Insert image" context "markup editor image modal" %}
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label" for="markup_link_url">
+              {% translate "Image URL:" context "markup editor image modal" %}
+            </label>
+            <input type="text" id="markup_link_url" name="url" class="form-control" value="" required>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="markup_link_text">
+              {% translate "Alternate text:" context "markup editor image modal" %}
+            </label>
+            <div>
+              <input type="text" id="markup_link_text" name="text" class="form-control" value="">
+              <p class="help-block">
+                {% blocktranslate trimmed context "markup editor image modal" %}
+                  Optional. Used as the image's description if it fails to load and by screen readers.
+                {% endblocktranslate %}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            {% translate "Cancel" context "markup editor modal btn" %}
+          </button>
+          <button class="btn btn-primary">
+            {% translate "Insert image" context "markup editor image modal btn" %}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  id="markup-editor-quote-modal"
+  class="modal fade"
+  aria-hidden="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog" role="document">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' context 'modal' %}"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">
+            {% translate "Insert quote" context "markup editor quote modal" %}
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label" for="markup_quote_author">
+              {% translate "Quote's author or source:" context "markup editor quote modal" %}
+            </label>
+            <input type="text" id="markup_quote_author" name="author" class="form-control" value="">
+            <p class="help-block">
+              {% blocktranslate trimmed context "markup editor quote modal" %}
+                Optional. If it's username, put "@" before it ("@JohnDoe").
+              {% endblocktranslate %}
+            </p>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="markup_quote_text">
+              {% translate "Quoted text:" context "markup editor quote modal" %}
+            </label>
+            <div>
+              <textarea type="text" id="markup_quote_text" name="text" class="form-control" rows="6" required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            {% translate "Cancel" context "markup editor modal btn" %}
+          </button>
+          <button class="btn btn-primary">
+            {% translate "Insert quote" context "markup editor quote modal btn" %}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  id="markup-editor-code-modal"
+  class="modal fade"
+  aria-hidden="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog" role="document">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' context 'modal' %}"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">
+            {% translate "Insert code" context "markup editor code modal" %}
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label" for="markup_code_info">
+              {% translate "Info:" context "markup editor code modal" %}
+            </label>
+            <input type="text" id="markup_code_info" name="info" class="form-control">
+            <p class="help-block">
+              {% blocktranslate trimmed context "markup editor quote modal" %}
+                Short description for the code. Optional.
+              {% endblocktranslate %}
+            </p>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="markup_code_syntax">
+              {% translate "Syntax highlighting:" context "markup editor code modal" %}
+            </label>
+            {% if syntax_highlighting %}
+              <select id="markup_code_syntax" class="form-control" name="syntax">
+                <option value="">{% translate "No syntax highlighting" context "markup editor code syntax choice" %}</option>
+                {% for value, name in syntax_highlighting %}<option value="{{ value }}">{{ name }}</option>{% endfor %}
+              </select>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="markup_code">
+              {% translate "Code to insert:" context "markup editor code modal" %}
+            </label>
+            <div>
+              <textarea id="markup_code" name="code" class="form-control" rows="6" required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            {% translate "Cancel" context "markup editor modal btn" %}
+          </button>
+          <button class="btn btn-primary">
+            {% translate "Insert code" context "markup editor code modal btn" %}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  id="markup-editor-formatting-help"
+  class="modal fade"
+  aria-hidden="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog" role="document"></div>
+</div>

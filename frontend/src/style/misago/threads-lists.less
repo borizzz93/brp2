@@ -1,0 +1,543 @@
+//
+// Threads Lists
+// --------------------------------------------------
+
+.threads-list {
+  padding: 0;
+  margin-bottom: @line-height-computed;
+
+  background-color: @list-group-bg;
+  border: 1px solid @list-group-border;
+  border-radius: @list-group-border-radius;
+  overflow: hidden;
+}
+
+// Make list row flexbox row
+.threads-list-item {
+  display: flex;
+  align-items: center;
+
+  padding: 10px 15px;
+
+  border-bottom: 1px solid @list-group-border;
+
+  img {
+    border-radius: @border-radius-small;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.threads-list-item-right-col {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.threads-list-item-top-row {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.threads-list-item-bottom-row,
+.threads-list-item-bottom-left,
+.threads-list-item-bottom-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Animate in new or updated threads
+@keyframes misago-threads-list-item-animate {
+  0% {
+    background-color: @threads-list-item-animation-color;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.threads-list-item-animate {
+  animation-name: misago-threads-list-item-animate;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+}
+
+// Thread icon
+.threads-list-item-col-read-status {
+  padding-right: floor(@grid-gutter-width / 2);
+
+  line-height: 0;
+}
+
+// Read icon (empty circle)
+.threads-list-read-icon {
+  display: inline-block;
+  width: @thread-read-icon-size;
+  height: @thread-read-icon-size;
+
+  border: @thread-read-icon-border solid @thread-read-icon-color;
+  border-radius: 100%;
+}
+
+// Unread icon (full circle)
+.threads-list-unread-icon {
+  display: inline-block;
+  width: @thread-unread-icon-size;
+  height: @thread-unread-icon-size;
+
+  font-size: 0;
+  line-height: 0;
+
+  background-color: @thread-unread-icon-color;
+  border-radius: 100%;
+}
+
+// Thread title
+.threads-list-item-row-title {
+  flex: 1;
+  width: 100%;
+}
+
+.threads-list-item-title {
+  &:link,
+  &:active,
+  &:focus,
+  &:hover,
+  &:visited {
+    font-size: @threads-list-title-size;
+
+    color: @thread-color;
+    overflow-wrap: anywhere;
+  }
+}
+
+.threads-list-item-title-new {
+  &:link,
+  &:active,
+  &:focus,
+  &:hover,
+  &:visited {
+    color: @thread-new-color;
+  }
+}
+
+// Thread categories list under title
+.threads-list-item-row-categories,
+.threads-list-item-col-categories {
+  display: flex;
+  width: 100%;
+}
+
+.threads-list-category-link {
+  display: flex;
+  align-items: center;
+
+  .material-icon {
+    margin-right: @font-size-small / 4;
+  }
+
+  &:link,
+  &:active,
+  &:focus,
+  &:hover,
+  &:visited {
+    color: @text-color;
+    opacity: 0.75;
+  }
+
+  &:focus,
+  &:hover {
+    color: @text-color;
+    text-decoration: none;
+    opacity: 1;
+  }
+}
+
+.threads-list-category-link + .threads-list-category-link {
+  margin-left: @grid-gutter-width / 2;
+}
+
+.threads-list-category-link-color {
+  .material-icon {
+    color: var(--color);
+  }
+}
+
+// Hide categories col by default
+.threads-list-item-col-categories {
+  display: none;
+}
+
+// Link to page
+.threads-list-item-goto-page {
+  margin-left: @thread-goto-page-link-margin;
+  padding: @thread-goto-page-link-padding;
+
+  border-radius: @border-radius-small;
+  font-size: @thread-goto-page-link-font-size;
+  font-weight: bold;
+
+  &:focus,
+  &:hover,
+  &:link,
+  &:visited {
+    color: @thread-goto-page-link-color;
+    background-color: @thread-goto-page-link-bg;
+    border: 1px solid @thread-goto-page-link-border;
+    text-decoration: none;
+  }
+
+  &:active {
+    color: @thread-goto-page-link-active-color;
+    background-color: @thread-goto-page-link-active-bg;
+    border: 1px solid @thread-goto-page-link-active-border;
+  }
+}
+
+// Thread status flags
+.threads-list-item-col-flags {
+  padding-left: @grid-gutter-width / 2;
+}
+
+.threads-list-item .thread-flags {
+  opacity: @thread-flag-icon-opacity;
+}
+
+.threads-list-item:hover,
+.threads-list-item:focus {
+  .thread-flags {
+    opacity: @thread-flag-icon-opacity-hover;
+  }
+}
+
+// Thread category
+.threads-list-item-col-category-labels {
+  padding-left: @grid-gutter-width / 2;
+
+  font-size: 0;
+  white-space: nowrap;
+}
+
+.threads-list-category-label {
+  display: inline-flex;
+  align-items: center;
+
+  height: @thread-flag-block-size;
+  padding: 0 6px;
+
+  font-size: @font-size-small;
+  font-weight: bold;
+
+  &,
+  &:link,
+  &:active,
+  &:hover,
+  &:focus,
+  &:visited {
+    color: @category-label-default-color;
+    background: @category-label-default-bg;
+    text-decoration: none;
+  }
+
+  &.threads-list-category-label-color {
+    &,
+    &:link,
+    &:active,
+    &:hover,
+    &:focus,
+    &:visited {
+      color: #fff;
+      background: var(--label-color);
+    }
+  }
+}
+
+.threads-list-category-label:first-child {
+  border-top-left-radius: @border-radius-small;
+  border-bottom-left-radius: @border-radius-small;
+}
+
+.threads-list-category-label:last-child {
+  border-top-right-radius: @border-radius-small;
+  border-bottom-right-radius: @border-radius-small;
+}
+
+.threads-list-category-label + .threads-list-category-label {
+  margin-left: 2px;
+}
+
+// Replies
+.threads-list-item-col-replies {
+  width: 80px;
+  padding-left: @grid-gutter-width / 2;
+}
+
+// Original poster and last poster
+.threads-list-item-col-posters {
+  padding-left: @grid-gutter-width / 2;
+  width: 76px;
+
+  a {
+    display: inline-block;
+  }
+  a:hover,
+  a:focus {
+    text-decoration: none;
+  }
+}
+
+.threads-list-item-starter + .threads-list-item-last-poster {
+  margin-left: @grid-gutter-width / 4;
+}
+
+// Small first and last posters, hidden by default
+.threads-list-item-col-posters-sm {
+  display: none;
+
+  img {
+    width: @thread-flag-block-size;
+    height: @thread-flag-block-size;
+  }
+}
+
+// Last activity
+.threads-list-item-col-last-activity {
+  width: 90px;
+  padding-left: @grid-gutter-width / 2;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  a:link,
+  a:hover,
+  a:active,
+  a:visited,
+  a:focus {
+    color: @thread-last-activity-color;
+    font-size: @thread-last-activity-size;
+  }
+}
+
+// Checkbox
+.threads-list-item-col-checkbox {
+  width: 36px;
+  margin-right: -10px;
+
+  text-align: center;
+}
+
+@media screen and (max-width: @screen-sm-max) {
+  // Remove vertical center align
+  .threads-list-item {
+    align-items: flex-start;
+  }
+
+  // Use two rows per item
+  .threads-list-item-right-col {
+    display: block;
+  }
+
+  // Align top row contents to top
+  .threads-list-item-top-row {
+    align-items: start;
+  }
+
+  // Make all cols in second row auto, align them to right
+  .threads-list-item-bottom-row {
+    justify-content: space-between;
+    flex: 0;
+
+    margin-top: @grid-gutter-width / 4;
+  }
+
+  // Hide some items used on large displays
+  .threads-list-item-row-categories,
+  .threads-list-item-col-posters,
+  .threads-list-item-col-replies-zero {
+    display: none;
+  }
+
+  // Align read icon with title
+  .threads-list-item-col-read-status {
+    padding-top: @thread-read-icon-offset-top;
+  }
+
+  // Remove left padding from flags and category labels
+  .threads-list-item-col-flags,
+  .threads-list-item-col-category-labels {
+    padding-left: 0;
+  }
+
+  // Reveal categories breadcrumbs col
+  .threads-list-item-col-categories {
+    display: flex;
+    align-items: center;
+  }
+
+  // Add spacing between flags and categories or labels
+  .threads-list-item-col-flags + .threads-list-item-col-categories,
+  .threads-list-item-col-flags + .threads-list-item-col-category-labels {
+    margin-left: @grid-gutter-width / 2;
+  }
+
+  // Don't break lines in categories or labels
+  .threads-list-item-col-categories .threads-list-category-link,
+  .threads-list-item-col-category-labels .threads-list-category-label {
+    white-space: nowrap;
+  }
+
+  // Make width of replies and last activity auto
+  .threads-list-item-col-replies,
+  .threads-list-item-col-last-activity {
+    width: auto;
+  }
+
+  // Reveal small posters
+  .threads-list-item-col-posters-sm {
+    display: block;
+    margin-left: @grid-gutter-width / 2;
+  }
+}
+
+@media screen and (max-width: @threads-list-breadcrumbs-breakpoint) {
+  // Hide non-last category
+  .threads-list-item-col-categories {
+    a {
+      display: none;
+    }
+
+    a:last-child {
+      display: inline-block;
+      margin: 0;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xs-max) {
+  // Make card full-width
+  .threads-list {
+    border-radius: 0;
+    border-width: 1px 0;
+  }
+
+  .threads-list-item {
+    padding: 10px 0;
+  }
+
+  // Remove top margin from bottom row itself
+  .threads-list-item-bottom-row {
+    margin-top: 0;
+  }
+
+  // Add top margin to bottom row halves
+  .threads-list-item-bottom-left,
+  .threads-list-item-bottom-right {
+    margin-top: floor(@grid-gutter-width / 4);
+  }
+
+  // Allow breaking bottom row into two
+  .threads-list-item-bottom-row {
+    display: block;
+    overflow: auto;
+
+    .threads-list-item-bottom-left {
+      float: left;
+    }
+
+    .threads-list-item-bottom-right {
+      float: right;
+    }
+  }
+
+  // Make padding on thread read icon smaller, offset it to right
+  .threads-list-item-col-read-status {
+    padding-right: floor(@grid-gutter-width / 4);
+  }
+
+  // Make thread title smaller
+  .threads-list-item-title {
+    font-size: @threads-list-title-size-sm;
+  }
+
+  // Hide starter's avatar
+  .threads-list-item-starter {
+    display: none;
+  }
+
+  // Make last activity small but add spacing to make it easier to click
+  .threads-list-item-col-last-activity {
+    padding-left: floor(@grid-gutter-width / 2);
+    padding-right: 0;
+
+    a:link,
+    a:hover,
+    a:active,
+    a:visited,
+    a:focus {
+      font-size: @thread-last-activity-size-xs;
+    }
+  }
+
+  // Fix checkbox right negative margin
+  .threads-list-item-col-checkbox {
+    margin-right: 0px;
+
+    input {
+      position: relative;
+      left: 10px;
+    }
+  }
+}
+
+// New threads poll message
+.threads-list-poll-new {
+  padding: 0;
+  list-style: none;
+}
+
+.btn-threads-list-poll {
+  display: block;
+  padding: 10px 15px;
+  width: 100%;
+
+  color: @btn-threads-list-poll-color;
+  background-color: @btn-threads-list-poll-bg;
+  border: none;
+  border-bottom: 1px solid @btn-threads-list-poll-border;
+  border-radius: 0;
+}
+
+// Blankslate
+.threads-list-blankslate {
+  padding: 20px 30px;
+}
+
+.threads-list-blankslate-message {
+  margin: 0;
+
+  font-size: @font-size-large;
+  text-align: center;
+}
+
+.threads-list-blankslate-links {
+  margin-top: @line-height-computed;
+
+  text-align: center;
+}
+
+@media screen and (max-width: @screen-xs-max) {
+  .threads-list-blankslate {
+    padding: 10px 15px;
+  }
+
+  .threads-list-blankslate-message {
+    font-size: @font-size-base;
+  }
+}

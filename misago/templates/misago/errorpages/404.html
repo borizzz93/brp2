@@ -1,0 +1,44 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Page not found" context "error 404 page" %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}
+{% translate "The link you've followed was incorrect or the page has been moved or deleted." context "error 404 page" %}
+{% endblock meta-description %}
+
+
+{% block og-title %}{% translate "Page not found" context "error 404 page" %}{% endblock %}
+{% block twitter-title %}{% translate "Page not found" context "error 404 page" %}{% endblock %}
+
+
+{% block og-description %}
+{% translate "The link you've followed was incorrect or the page has been moved or deleted." context "error 404 page" %}
+{% endblock %}
+
+
+{% block twitter-description %}
+{% translate "The link you've followed was incorrect or the page has been moved or deleted." context "error 404 page" %}
+{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-error-404">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">info_outline</span>
+      </div>
+
+      <div class="message-body">
+        <p class="lead">{% translate "Requested page could not be found." context "error 404 page" %}</p>
+        <p>{% translate "The link you've followed was incorrect or the page has been moved or deleted." context "error 404 page" %}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

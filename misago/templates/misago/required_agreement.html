@@ -1,0 +1,35 @@
+{% load i18n misago_capture %}
+<div class="agreement-overlay">
+  <div class="container">
+    <div class="agreement-content">
+      <div class="agreement-header">
+        <h2>{{ misago_agreement.title }}</h2>
+        {% if not misago_agreement.link %}
+          <p class="lead">
+            {% blocktranslate trimmed with agreement=misago_agreement.type context "agreement overlay" %}
+              {{ agreement }} has been updated:
+            {% endblocktranslate %}
+          </p>
+        {% endif %}
+      </div>
+      <div class="agreement-body">
+        {% if misago_agreement.link %}
+          <p class="lead">
+            {% capture trimmed as link %}
+              <a href="{{ misago_agreement.link }}" target="_blank">{% translate "here" context "agreement overlay" %}</a>
+            {% endcapture %}
+            {% blocktranslate trimmed with agreement=misago_agreement.type link=link|safe context "agreement overlay" %}
+              Please review the updated {{ agreement }} available {{ link }}.
+            {% endblocktranslate %}
+          </p>
+        {% else %}
+          <article class="misago-markup">
+            {{ misago_agreement.text|safe }}
+          </article>
+        {% endif %}
+      </div>
+      <div id="required-agreement-mount" class="agreement-footer">
+      </div>
+    </div>
+  </div>
+</div>

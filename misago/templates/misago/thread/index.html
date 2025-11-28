@@ -1,0 +1,52 @@
+{% extends "misago/base.html" %}
+{% load i18n misago_component misago_plugins %}
+
+
+{% block title %}
+  {{ thread }}{% if feed.paginator.number > 1 %} | {% blocktranslate with page=feed.paginator.number context "thread page title" %}Page {{ page }}{% endblocktranslate %}{% endif %} | {{ settings.forum_name }}
+{% endblock title %}
+
+
+{% block content %}
+<div class="page page-thread">
+  {% include "misago/thread/header.html" %}
+  <div class="container page-container">
+
+    {% pluginoutlet THREAD_REPLIES_PAGE_START %}
+
+    <a id="misago-page-scroll-target" class="scroll-target"></a>
+
+    <div id="misago-poll-scroll-target" class="scroll-target"></div>
+    {% if poll %}{% includecomponent poll %}{% endif %}
+
+    {% include "misago/thread/partial.html" %}
+
+    {% if user.is_authenticated %}
+      <div id="misago-quick-reply-scroll-target" class="scroll-target"></div>
+      {% includecomponent reply %}
+    {% endif %}
+
+    {% pluginoutlet THREAD_REPLIES_PAGE_END %}
+
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block modals %}
+  {% if user.is_authenticated %}
+    {% include "misago/posting/markup_editor_modals.html" %}
+    {% include "misago/posting/attachment_templates.html" %}
+  {% endif %}
+  {% include "misago/lightbox/index.html" %}
+{% endblock modals %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+  misago.quote.activate({
+    reply: {% if reply.url %}!!document.getElementById("misago-htmx-quick-reply"){% else %}false{% endif %},
+    quote: {% if user.is_authenticated %}true{% else %}false{% endif %},
+  })
+</script>
+{% endblock javascript %}

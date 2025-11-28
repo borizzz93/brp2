@@ -1,0 +1,8 @@
+{% load misago_admin_form %}
+<select name="{{ widget.name }}" {% render_attrs widget.attrs class_name="form-control" %} {% render_bool_attrs widget.attrs %}>
+  {% for option in widget|get_options %}
+    <option{% if option.value is not None %} value="{{ option.value|stringformat:'s' }}"{% endif %} {% render_bool_attrs option %}>
+      {{ option.label }}
+    </option>
+  {% endfor %}
+</select>

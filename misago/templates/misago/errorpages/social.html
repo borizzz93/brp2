@@ -1,0 +1,46 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Problem with sign in" context "error social auth page" %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}{{ message }}{% endblock %}
+
+
+{% block og-title %}{% translate "Problem with sign in" context "error social auth page" %}{% endblock %}
+{% block twitter-title %}{% translate "Problem with sign in" context "error social auth page" %}{% endblock %}
+
+
+{% block og-description %}{{ message }}{% endblock %}
+{% block twitter-description %}{{ message }}{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-error-social">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">sync_problem</span>
+      </div>
+
+      <div class="message-body">
+        {% if ban %}
+          {% include "misago/errorpages/ban_message.html" %}
+        {% else %}
+          <p class="lead">{{ message }}</p>
+          <p>
+            {% if help_text %}
+              {{ help_text }}
+            {% else %}
+              {% translate "Please try again or use another method to sign in if the problem persists." context "error social auth page" %}
+            {% endif %}
+          </p>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

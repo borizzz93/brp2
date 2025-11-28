@@ -1,0 +1,21 @@
+{% extends "misago/admin/layout.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Page not found" context "admin error 404" %} | {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+  <div class="card card-admin-error">
+    <h5 class="card-header">
+      {% translate "Requested page could not be found" context "admin error 404" %}
+    </h5>
+    <div class="card-body">
+      <p class="mb-0">
+        {% translate "The link you've followed was incorrect or the page has been moved or deleted." context "admin error 404" %}
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

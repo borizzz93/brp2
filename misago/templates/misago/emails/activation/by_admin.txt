@@ -1,0 +1,14 @@
+{% extends "misago/emails/base.txt" %}
+{% load i18n misago_absoluteurl %}
+
+
+{% block content %}
+{% blocktranslate trimmed with user=user context "account activated email" %}
+{{ user }}, your account has been activated by site administrator.
+{% endblocktranslate %}
+
+{% blocktranslate trimmed context "account activated email" %}
+You can now sign in to it using the form below:
+{% endblocktranslate %}
+{% absoluteurl LOGIN_URL %}
+{% endblock content %}

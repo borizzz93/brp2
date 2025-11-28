@@ -1,0 +1,46 @@
+{% extends "misago/admin/generic/base.html" %}
+{% load i18n %}
+
+
+{% block title %}
+{% translate "Assets" context "admin theme assets" %} | {{ theme }} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+<small>
+  {{ theme }}
+</small>
+{% endblock page-header %}
+
+
+{% block page-actions %}
+<div class="col-auto page-action">
+  <a href="{% url 'misago:admin:themes:edit' pk=theme.pk %}" class="btn btn-primary btn-sm">
+    <span class="fa fa-edit"></span>
+    {% translate "Edit theme" context "admin themes" %}
+  </a>
+</div>
+{% endblock %}
+
+
+{% block view %}
+{% include "misago/admin/themes/assets/css.html" %}
+{% include "misago/admin/themes/assets/media.html" %}
+{% endblock view %}
+
+
+{% block content %}
+{{ block.super }}
+
+{% include "misago/admin/themes/assets/upload-css.html" %}
+{% include "misago/admin/themes/assets/upload-media.html" %}
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+  window.misago.initMassDelete("{% translate 'Are you sure you want to delete selected items?' context 'admin theme assets' %}")
+</script>
+{% endblock javascript %}

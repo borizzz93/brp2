@@ -1,0 +1,57 @@
+# Production requirements for Misago
+# Additional packages needed for production deployment
+
+# Security and monitoring
+django-environ==0.11.2
+sentry-sdk[django]==1.40.6
+django-cors-headers==4.3.1
+
+# Redis for production caching and sessions
+redis==5.0.1
+django-redis==5.4.0
+
+# Database optimization
+psycopg2-binary==2.9.9
+
+# SSL and security
+pyOpenSSL==24.0.0
+cryptography==42.0.2
+
+# Performance monitoring
+django-debug-toolbar==4.3.0
+django-silk==5.0.4
+
+# Celery monitoring
+flower==2.0.1
+django-celery-beat==2.5.0
+django-celery-results==2.5.1
+
+# Logging and monitoring
+structlog==24.1.0
+django-structlog==4.0.1
+
+# Rate limiting
+django-ratelimit==4.1.0
+
+# File uploads and storage
+django-storages[boto3]==1.14.2  # For AWS S3 (optional)
+boto3==1.34.34
+
+# Health checks
+django-health-check==3.17.0
+psutil==5.9.6
+
+# Image processing (if needed)
+Pillow==10.2.0
+
+# Security headers
+django-csp==3.7
+
+# Production WSGI server
+gunicorn==21.2.0
+
+# Production ASGI server (if using Channels)
+daphne==4.0.0
+
+# Environment management
+python-decouple==3.8

@@ -1,0 +1,61 @@
+{% extends "misago/base.html" %}
+{% load i18n misago_absoluteurl %}
+
+
+{% block title %}{% translate "Search site" context "search page" %} | {{ block.super }}{% endblock %}
+
+
+{% block og-title %}{% translate "Search site" context "search page" %}{% endblock %}
+{% block twitter-title %}{% translate "Search site" context "search page" %}{% endblock %}
+
+
+{% block og-url %}{% absoluteurl request_path %}{% endblock %}
+{% block twitter-url %}{% absoluteurl request_path %}{% endblock %}
+
+
+{% block content %}
+<div class="page page-search">
+  <div class="container page-header-container">
+    <div class="page-header page-header-site-search">
+      <div class="page-header-bg-image">
+        <div class="page-header-bg-overlay">
+          <div class="page-header-image"></div>
+          <div class="page-header-banner page-header-banner-site-search">
+            <div class="page-header-banner-bg-image">
+              <div class="page-header-banner-bg-overlay">
+                <h1>{% translate "Search" context "search page header" %}</h1>
+              </div>
+            </div>
+          </div>
+          <div class="page-header-details page-header-search-form">
+            <div class="flex-row">
+              <div class="flex-row-section flex-row-section-auto">
+                <div class="flex-row-col">
+                  <input
+                    class="form-control"
+                    type="text"
+                    value="{{ search_query }}"
+                    placeholder="{% translate 'Search' context 'search input placeholder' %}"
+                    disabled
+                  />
+                </div>
+                <div class="flex-row-col flex-row-col-shrink">
+                  <button class="btn btn-secondary btn-icon btn-outline" disabled>
+                    <span class="material-icon">search</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container page-container">
+    <p class="lead text-center xs-margin-top sm-margin-top">
+      {% translate "Loading search..." context "search page" %}
+    </p>
+  </div>
+</div>
+{% endblock content %}

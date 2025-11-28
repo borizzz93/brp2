@@ -1,0 +1,21 @@
+[Unit]
+Description=Misago Forum Application
+Requires=docker.service
+After=docker.service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/misago
+User=misago
+Group=misago
+ExecStart=/usr/local/bin/docker-compose -f docker-compose.prod.yaml up -d
+ExecStop=/usr/local/bin/docker-compose -f docker-compose.prod.yaml down
+ExecReload=/usr/local/bin/docker-compose -f docker-compose.prod.yaml restart
+TimeoutStartSec=0
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

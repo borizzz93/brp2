@@ -1,0 +1,139 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{{ target }} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+<small>
+  {{ target }}
+</small>
+{% endblock page-header %}
+
+
+{% block page-actions %}
+<div class="col-auto page-action">
+  <a href="{% url 'misago:admin:groups:categories' pk=target.pk %}" class="btn btn-primary btn-sm">
+    <span class="fa fa-sitemap"></span>
+    {% translate "Category permissions" context "admin groups" %}
+  </a>
+</div>
+{% endblock %}
+
+
+{% block form-header %}
+{% translate "Edit group" context "admin group form" %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Basic settings" context "admin group form" %}</legend>
+
+    {% form_row form.group.name %}
+    {% form_row form.group.slug %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Description" context "admin group form" %}</legend>
+
+    {% form_row form.description.markdown %}
+    {% form_row form.description.meta %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Display and appearance" context "admin group form" %}</legend>
+
+    {% form_row form.group.user_title %}
+    {% form_row form.group.color %}
+    {% form_row form.group.icon %}
+    {% form_row form.group.css_suffix %}
+    {% form_row form.group.is_page %}
+    {% form_row form.group.is_hidden %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Permissions" context "admin group form" %}</legend>
+
+    {% form_row form.group.copy_permissions %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Posting" context "admin group permissions form" %}</legend>
+
+    {% form_row form.group.can_edit_own_threads %}
+    {% form_row form.group.own_threads_edit_time_limit %}
+    {% form_row form.group.can_edit_own_posts %}
+    {% form_row form.group.own_posts_edit_time_limit %}
+    {% form_row form.group.exempt_from_flood_control %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Private threads" context "admin group permissions form" %}</legend>
+
+    {% form_row form.group.can_use_private_threads %}
+    {% form_row form.group.can_start_private_threads %}
+    {% form_row form.group.private_thread_members_limit %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Attachments" context "admin group permissions form" %}</legend>
+
+    {% form_row form.group.can_upload_attachments %}
+    {% form_row form.group.attachment_storage_limit %}
+    {% form_row form.group.unused_attachments_storage_limit %}
+    {% form_row form.group.attachment_size_limit %}
+    {% form_row form.group.can_always_delete_own_attachments %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Polls" context "admin group permissions form" %}</legend>
+
+    {% form_row form.group.can_start_polls %}
+    {% form_row form.group.can_edit_own_polls %}
+    {% form_row form.group.own_polls_edit_time_limit %}
+    {% form_row form.group.can_close_own_polls %}
+    {% form_row form.group.own_polls_close_time_limit %}
+    {% form_row form.group.can_vote_in_polls %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Usernames" context "admin group permissions form" %}</legend>
+
+    {% form_row form.group.can_change_username %}
+    {% form_row form.group.username_changes_limit %}
+    {% form_row form.group.username_changes_expire %}
+    {% form_row form.group.username_changes_span %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "User profiles" context "admin group permissions form" %}</legend>
+
+    {% form_row form.group.can_see_user_profiles %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

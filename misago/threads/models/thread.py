@@ -1,0 +1,255 @@
+from functools import cached_property
+
+from django.db import models
+from django.db.models import Q
+from django.utils import timezone
+from django.utils.translation import pgettext_lazy
+
+from ...conf import settings
+from ...core.utils import slugify
+from ...plugins.models import PluginDataModel
+from ...polls.models import Poll
+
+
+class Thread(PluginDataModel):
+    WEIGHT_DEFAULT = 0
+    WEIGHT_PINNED = 1
+    WEIGHT_GLOBAL = 2
+
+    WEIGHT_CHOICES = [
+        (
+            WEIGHT_DEFAULT,
+            pgettext_lazy("thread weight choice", "Not pinned"),
+        ),
+        (
+            WEIGHT_PINNED,
+            pgettext_lazy("thread weight choice", "Pinned in category"),
+        ),
+        (
+            WEIGHT_GLOBAL,
+            pgettext_lazy("thread weight choice", "Pinned globally"),
+        ),
+    ]
+
+    category = models.ForeignKey("misago_categories.Category", on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255)
+    replies = models.PositiveIntegerField(default=0, db_index=True)
+
+    has_events = models.BooleanField(default=False)
+    has_poll = models.BooleanField(default=False)
+    has_reported_posts = models.BooleanField(default=False)
+    has_open_reports = models.BooleanField(default=False)
+    has_unapproved_posts = models.BooleanField(default=False)
+    has_hidden_posts = models.BooleanField(default=False)
+
+    started_at = models.DateTimeField(db_index=True)
+    last_posted_at = models.DateTimeField(db_index=True)
+
+    first_post = models.ForeignKey(
+        "misago_threads.Post",
+        related_name="+",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    starter = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+    )
+    starter_name = models.CharField(max_length=255)
+    starter_slug = models.CharField(max_length=255)
+
+    last_post = models.ForeignKey(
+        "misago_threads.Post",
+        related_name="+",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    last_post_is_event = models.BooleanField(default=False)
+    last_poster = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="last_poster_set",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    last_poster_name = models.CharField(max_length=255, null=True, blank=True)
+    last_poster_slug = models.CharField(max_length=255, null=True, blank=True)
+
+    weight = models.PositiveIntegerField(default=WEIGHT_DEFAULT)
+
+    is_unapproved = models.BooleanField(default=False, db_index=True)
+    is_hidden = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False)
+
+    best_answer = models.ForeignKey(
+        "misago_threads.Post",
+        related_name="+",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    best_answer_is_protected = models.BooleanField(default=False)
+    best_answer_marked_on = models.DateTimeField(null=True, blank=True)
+    best_answer_marked_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="marked_best_answer_set",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    best_answer_marked_by_name = models.CharField(max_length=255, null=True, blank=True)
+    best_answer_marked_by_slug = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            *PluginDataModel.Meta.indexes,
+            models.Index(
+                name="misago_thread_pinned_glob_part",
+                fields=["weight"],
+                condition=Q(weight=2),
+            ),
+            models.Index(
+                name="misago_thread_pinned_loca_part",
+                fields=["weight"],
+                condition=Q(weight=1),
+            ),
+            models.Index(
+                name="misago_thread_not_pinned_part",
+                fields=["weight"],
+                condition=Q(weight=0),
+            ),
+            models.Index(
+                name="misago_thread_not_global_part",
+                fields=["weight"],
+                condition=Q(weight__lt=2),
+            ),
+            models.Index(
+                name="misago_thread_has_reporte_part",
+                fields=["has_reported_posts"],
+                condition=Q(has_reported_posts=True),
+            ),
+            models.Index(
+                name="misago_thread_has_unappro_part",
+                fields=["has_unapproved_posts"],
+                condition=Q(has_unapproved_posts=True),
+            ),
+            models.Index(
+                name="misago_thread_is_visible_part",
+                fields=["is_hidden"],
+                condition=Q(is_hidden=False),
+            ),
+            models.Index(fields=["category", "id"]),
+            models.Index(fields=["category", "last_posted_at"]),
+            models.Index(fields=["category", "replies"]),
+        ]
+
+    def __str__(self):
+        return self.title
+
+    def delete(self, *args, **kwargs):
+        from ..signals import delete_thread
+
+        delete_thread.send(sender=self)
+
+        super().delete(*args, **kwargs)
+
+    def merge(self, other_thread):
+        if self.pk == other_thread.pk:
+            raise ValueError("thread can't be merged with itself")
+
+        from ..signals import merge_thread
+
+        merge_thread.send(sender=self, other_thread=other_thread)
+
+    def move(self, new_category):
+        from ..signals import move_thread
+
+        self.category = new_category
+        move_thread.send(sender=self)
+
+    @property
+    def has_best_answer(self):
+        return bool(self.best_answer_id)
+
+    @property
+    def replies_in_ks(self):
+        return "%sK" % round(self.replies / 1000, 0)
+
+    @cached_property
+    def private_thread_owner_id(self) -> int | None:
+        return (
+            self.privatethreadmember_set.filter(is_owner=True)
+            .values_list("user_id", flat=True)
+            .first()
+        )
+
+    @cached_property
+    def private_thread_member_ids(self) -> list[int]:
+        """Returns lists of private thread participating users ids.
+
+        Cached property. Thread owner is guaranteed to be first item of the list.
+        """
+        return list(
+            self.privatethreadmember_set.order_by("-is_owner", "id").values_list(
+                "user_id", flat=True
+            )
+        )
+
+    def set_title(self, title):
+        self.title = title
+        self.slug = slugify(title)
+
+        if self.id:
+            from ..signals import update_thread_title
+
+            update_thread_title.send(sender=self)
+
+    def set_first_post(self, post):
+        self.started_at = post.posted_at
+        self.first_post = post
+        self.starter = post.poster
+        self.starter_name = post.poster_name
+        if post.poster:
+            self.starter_slug = post.poster.slug
+        else:
+            self.starter_slug = slugify(post.poster_name)
+
+        self.is_unapproved = post.is_unapproved
+        self.is_hidden = post.is_hidden
+
+    def set_last_post(self, post):
+        self.last_posted_at = post.posted_at
+        self.last_post = post
+        self.last_poster = post.poster
+        self.last_poster_name = post.poster_name
+        if post.poster:
+            self.last_poster_slug = post.poster.slug
+        else:
+            self.last_poster_slug = slugify(post.poster_name)
+
+    def set_best_answer(self, user, post):
+        if post.thread_id != self.id:
+            raise ValueError("post to set as best answer must be in same thread")
+        if post.id == self.first_post_id:
+            raise ValueError("post to set as best answer can't be first post")
+        if post.is_hidden:
+            raise ValueError("post to set as best answer can't be hidden")
+        if post.is_unapproved:
+            raise ValueError("post to set as best answer can't be unapproved")
+
+        self.best_answer = post
+        self.best_answer_is_protected = post.is_protected
+        self.best_answer_marked_on = timezone.now()
+        self.best_answer_marked_by = user
+        self.best_answer_marked_by_name = user.username
+        self.best_answer_marked_by_slug = user.slug
+
+    def clear_best_answer(self):
+        self.best_answer = None
+        self.best_answer_is_protected = False
+        self.best_answer_marked_on = None
+        self.best_answer_marked_by = None
+        self.best_answer_marked_by_name = None
+        self.best_answer_marked_by_slug = None

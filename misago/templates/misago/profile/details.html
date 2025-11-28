@@ -1,0 +1,86 @@
+{% extends "misago/profile/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Details" context "user profile page details" %} | {{ block.super }}{% endblock %}
+
+
+{% block og-title %}{% translate "Details" context "user profile page details" %} | {{ block.super }}{% endblock %}
+{% block twitter-title %}{% translate "Details" context "user profile page details" %} | {{ block.super }}{% endblock %}
+
+
+{% block section %}
+<div class="profile-details">
+
+  <nav class="toolbar">
+    <div class="toolbar-section toolbar-section-auto">
+      <div class="toolbar-item">
+        <h3>
+          {% translate "Details" context "user profile page details" %}
+        </h3>
+      </div>
+    </div>
+    {% if profile_details.edit %}
+      <div class="toolbar-section">
+        <div class="toolbar-item">
+          <button type="button" class="btn btn-default btn-outline btn-block" disabled>
+            {% translate "Edit" context "user profile page details" %}
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </nav>
+
+  {% if profile_details.groups %}
+    <div>
+      {% for group in profile_details.groups %}
+        <div class="panel panel-default panel-profile-details-group">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ group.name }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-horizontal">
+              {% for field in group.fields %}
+                <div class="form-group">
+                  <strong class="control-label col-md-3">
+                    {{ field.name }}:
+                  </strong>
+                  <div class="form-control-static col-md-9">
+                    {% if field.html %}
+                      {{ field.html|safe }}
+                    {% elif field.url %}
+                      <p>
+                        <a href="{{ field.url }}" target="_blank" rel="nofollow">
+                          {% if field.text %}
+                            {{ field.text }}
+                          {% else %}
+                            {{ field.url }}
+                          {% endif %}
+                        </a>
+                      </p>
+                    {% elif field.text %}
+                      <p>{{ field.text }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="panel panel-default">
+      <div class="panel-body text-center lead">
+        {% if is_authenticated_user %}
+          {% translate "You are not sharing any details with others." context "user profile page details" %}
+        {% else %}
+          {% blocktranslate trimmed with username=profile context "user profile page details" %}
+            {{ username }} is not sharing any details with others.
+          {% endblocktranslate %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock section %}

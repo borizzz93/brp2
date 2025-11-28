@@ -1,0 +1,13 @@
+{% load i18n misago_rich_text %}
+<div class="panel panel-default panel-form panel-message-preview">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      {% translate "Message preview" context "start thread page" %}
+    </h3>
+  </div>
+  <div class="panel-body">
+    <article class="rich-text" misago-lightbox-root>
+      {% rich_text preview preview_rich_text_data thread=thread %}
+    </article>
+  </div>
+</div>

@@ -1,0 +1,183 @@
+//
+// Buttons
+// --------------------------------------------------
+
+// Button loading style
+.btn.btn-loading {
+  &,
+  &:link,
+  &:active,
+  &:visited,
+  &:hover,
+  &:focus {
+    // make text transparent, but still take place in button
+    color: transparent;
+
+    // position loader over the text
+    .loader {
+      height: 20px;
+      margin-top: -20px;
+
+      & > div {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  &.btn-default .loader > div {
+    border-top-color: @btn-default-color;
+    border-bottom-color: @btn-default-color;
+  }
+
+  &.btn-primary .loader > div {
+    border-top-color: @btn-primary-color;
+    border-bottom-color: @btn-primary-color;
+  }
+
+  &.btn-success .loader > div {
+    border-top-color: @btn-success-color;
+    border-bottom-color: @btn-success-color;
+  }
+
+  &.btn-info .loader > div {
+    border-top-color: @btn-info-color;
+    border-bottom-color: @btn-info-color;
+  }
+
+  &.btn-warning .loader > div {
+    border-top-color: @btn-warning-color;
+    border-bottom-color: @btn-warning-color;
+  }
+
+  &.btn-danger .loader > div {
+    border-top-color: @btn-danger-color;
+    border-bottom-color: @btn-danger-color;
+  }
+}
+
+// Icons in buttons
+.btn .material-icon {
+  margin-right: 3px;
+  position: relative;
+  bottom: 1px;
+}
+
+// Btn with larger icon
+.btn-icon .material-icon {
+  margin: -1px -4px;
+
+  width: 20px;
+  height: 20px;
+
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.btn-icon .btn-text {
+  margin-left: @padding-small-horizontal;
+}
+
+.btn-icon .btn-text-left {
+  margin-right: @padding-small-horizontal;
+}
+
+// Block btn icon
+.btn-block.btn-icon {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.btn-icons-family {
+  .material-icon + .material-icon {
+    margin-left: @padding-small-horizontal;
+  }
+}
+
+// Auth buttons
+.btn-sign-in {
+  .button-variant(@btn-sign-in-color; @btn-sign-in-bg; @btn-sign-in-border);
+}
+
+.btn-register {
+  .button-variant(@btn-register-color; @btn-register-bg; @btn-register-border);
+}
+
+// Btn without background
+.btn-muted {
+  color: @text-muted;
+  border-radius: 0;
+
+  &,
+  &:active,
+  &.active,
+  &[disabled],
+  fieldset[disabled] & {
+    background-color: transparent;
+    .box-shadow(none);
+  }
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: transparent;
+  }
+  &:hover,
+  &:focus {
+    color: @text-color;
+    background-color: transparent;
+  }
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus {
+      color: @text-muted;
+      text-decoration: none;
+    }
+  }
+}
+
+// Button link
+.btn-link {
+  color: @gray;
+
+  &:hover,
+  &:focus {
+    color: @text-color;
+    text-decoration: none;
+  }
+
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus {
+      color: @gray-lighter;
+    }
+  }
+}
+
+// Moderation button
+.btn-moderation {
+  .button-variant(@btn-moderation-color; @btn-moderation-bg; @btn-moderation-border);
+}
+
+// Social sign in buttons
+.btn-social-github {
+  .button-variant(#fff; #333; #333);
+}
+
+.btn-social-facebook {
+  .button-variant(#fff; #4267b2; #4267b2);
+}
+
+.btn-social-google-oauth2 {
+  .button-variant(#fff; #db4437; #db4437);
+}
+
+.btn-social-discord {
+  .button-variant(#fff; #5865f2; #5865f2);
+}
+
+.btn-social-twitter {
+  .button-variant(#fff; #000000; #000000);
+}

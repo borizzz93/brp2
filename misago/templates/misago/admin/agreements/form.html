@@ -1,0 +1,69 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% if target.pk %}
+{% translate target.get_final_title %}
+{% else %}
+{% translate "New agreement" context "admin agreement form" %}
+{% endif %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+{% if target.pk %}
+  <small>
+    {{ target.get_final_title }}
+  </small>
+{% endif %}
+{% endblock page-header %}
+
+
+{% block page-actions %}
+{% if target.get_absolute_url %}
+  <div class="col-auto page-action">
+    <a href="{{ target.get_absolute_url }}" class="btn btn-primary btn-sm">
+      <span class="fas fa-external-link-alt"></span>
+      {% translate "View on site" context "admin agreement form" %}
+    </a>
+  </div>
+{% endif %}
+{% endblock %}
+
+
+{% block form-header %}
+{% if target.pk %}
+  {% translate "Edit agreement" context "admin agreement form" %}
+{% else %}
+  {% translate "New agreement" context "admin agreement form" %}
+{% endif %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Basic settings" context "admin agreement form" %}</legend>
+
+    {% form_row form.type %}
+    {% form_row form.title %}
+    {% form_row form.is_active %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Agreement contents" context "admin agreement form" %}</legend>
+
+    <div class="alert alert-info" role="alert">
+      {% translate "Fill in one of the fields." context "admin agreement form" %}
+    </div>
+
+    {% form_row form.link %}
+    {% form_row form.text %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

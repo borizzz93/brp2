@@ -1,0 +1,52 @@
+{% extends "misago/profile/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Posts" context "user profile page posts" %} | {{ block.super }}{% endblock %}
+
+
+{% block og-title %}{% translate "Posts" context "user profile page posts" %} | {{ block.super }}{% endblock %}
+{% block twitter-title %}{% translate "Posts" context "user profile page posts" %} | {{ block.super }}{% endblock %}
+
+
+{% block section %}
+<div class="profile-posts">
+
+  <nav class="toolbar">
+    <div class="toolbar-section toolbar-section-auto">
+      <div class="toolbar-item">
+        <h3>
+          {% if is_authenticated_user %}
+            {% blocktranslate trimmed count posts=profile.posts context "user profile page posts" %}
+              You have posted {{ posts }} message.
+            {% plural %}
+              You have posted {{ posts }} messages.
+            {% endblocktranslate %}
+          {% else %}
+            {% blocktranslate trimmed count posts=profile.posts with username=profile context "user profile page posts" %}
+              {{ username }} has posted {{ posts }} message.
+            {% plural %}
+              {{ username }} has posted {{ posts }} messages.
+            {% endblocktranslate %}
+          {% endif %}
+        </h3>
+      </div>
+    </div>
+  </nav>
+
+  {% if posts %}
+    {% include "misago/profile/feed.html" %}
+  {% else %}
+    <p class="lead">
+      {% if is_authenticated_user %}
+        {% translate "You have posted no messages" context "user profile page posts" %}
+      {% else %}
+        {% blocktranslate trimmed with username=profile.username context "user profile page posts" %}
+          {{ username }} posted no messages.
+        {% endblocktranslate %}
+      {% endif %}
+    </p>
+  {% endif %}
+
+</div>
+{% endblock section %}

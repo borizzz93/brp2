@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<li class="threads-list-blankslate">
+  {% if threads.active_filter %}
+    <p class="threads-list-blankslate-message">
+      {% blocktranslate trimmed with filter=threads.active_filter.name context "threads list blankslate" %}
+        No threads matching the "{{ filter }}" filter exist, or you can't see them.
+      {% endblocktranslate %}
+    </p>
+    <div class="threads-list-blankslate-links">
+      <a class="btn btn-default" href="{{ threads.filters_clear_url }}">
+        {% translate "Clear filters" context "threads list filter" %}
+      </a>
+    </div>
+  {% else %}
+    <p class="threads-list-blankslate-message">
+      {% blocktranslate trimmed context "threads list blankslate" %}
+        No threads have been started in this category yet, or you can't see them.
+      {% endblocktranslate %}
+    </p>
+    {% if start_thread_url %}
+      <div class="threads-list-blankslate-links">
+        <a class="btn btn-primary" href="{{ start_thread_url }}">
+          {% translate "Start new thread" context "threads list" %}
+        </a>
+      </div>
+    {% endif %}
+  {% endif %}
+</li>

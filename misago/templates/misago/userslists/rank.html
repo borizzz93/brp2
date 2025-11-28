@@ -1,0 +1,123 @@
+{% extends "misago/userslists/base.html" %}
+{% load i18n misago_absoluteurl misago_pagetitle misago_shorthands misago_stringutils %}
+
+
+{% block title %}{% pagetitle rank page=paginator.page %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}
+  {{ rank.description|default:"" }} {% blocktranslate trimmed count users=paginator.count context "rank users page meta" %}
+    {{ users }} user have this rank.
+  {% plural %}
+    {{ users }} users have this rank.
+  {% endblocktranslate %}
+{% endblock %}
+
+
+{% block meta-extra %}
+  {% if paginator.page > 1 %}
+    <link rel="canonical" href="{% url 'misago:users-rank' slug=rank.slug page=paginator.page %}" />
+  {% else %}
+    <link rel="canonical" href="{% url 'misago:users-rank' slug=rank.slug %}" />
+  {% endif %}
+  {% if paginator.previous > 1 %}
+    <link rel="prev" href="{% url 'misago:users-rank' slug=rank.slug page=paginator.previous %}" />
+  {% elif paginator.previous %}
+    <link rel="prev" href="{% url 'misago:users-rank' slug=rank.slug %}" />
+  {% endif %}
+  {% if paginator.next %}
+    <link rel="next" href="{% url 'misago:users-rank' slug=rank.slug page=paginator.next %}" />
+  {% endif %}
+{% endblock meta-extra %}
+
+
+{% block og-title %}{{ rank }}{% endblock %}
+{% block twitter-title %}{{ rank }}{% endblock %}
+
+
+{% block og-description %}
+  {% if rank.description %}
+    {{ rank.description }}
+  {% endif %} {% blocktranslate trimmed count users=paginator.count context "rank users page meta" %}
+    {{ users }} user have this rank.
+  {% plural %}
+    {{ users }} users have this rank.
+  {% endblocktranslate %}
+{% endblock og-description %}
+
+
+{% block twitter-description %}
+  {% if rank.description %}
+    {{ rank.description }}
+  {% endif %} {% blocktranslate trimmed count users=paginator.count context "rank users page meta" %}
+    {{ users }} user have this rank.
+  {% plural %}
+    {{ users }} users have this rank.
+  {% endblocktranslate %}
+{% endblock twitter-description %}
+
+
+{% block og-url %}{% absoluteurl rank.get_absolute_url %}{% endblock %}
+{% block twitter-url %}{% absoluteurl rank.get_absolute_url %}{% endblock %}
+
+
+{% block page-content %}
+<div class="rank-users-list{% if rank.css_class %} rank-users-{{ rank.css_class }}{% endif %}">
+  <div class="container page-container">
+    {% include "misago/userslists/nav.html" %}
+
+    {% if rank.description %}
+      <section class="rank-description">
+        <div class="page-lead {{ rank.description|force_escape|linebreaks|isdescriptionshort|iftrue:"lead" }}">
+          {{ rank.description|force_escape|urlize|linebreaks|safe }}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if paginator.count %}
+      <section>
+        <div class="users-cards-list ui-ready" itemscope itemtype="http://schema.org/ItemList">
+          <div class="row">
+            {% for user in users %}
+              <div class="col-xs-12 col-sm-4 col-md-3" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                {% include "misago/userslists/usercard.html" with user=user %}
+                <meta itemprop="position" content="{{ paginator.before|add:forloop.counter }}" />
+              </div>
+            {% endfor %}
+          </div>
+          <meta itemprop="numberOfItems" content="{{ paginator.count }}">
+          <meta itemprop="itemListOrder" content="http://schema.org/ItemListOrderAscending">
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar-section">
+            <div class="toolbar-item">
+              {% include "misago/userslists/rank_paginator.html" %}
+            </div>
+          </div>
+          <div class="toolbar-section toolbar-section-auto">
+            <div class="toolbar-item">
+              <p>
+                {% if paginator.more %}
+                  {% blocktranslate trimmed count more=paginator.more context "rank users page" %}
+                    There is {{ more }} more users with this rank.
+                  {% plural %}
+                    There are {{ more }} more users with this rank.
+                  {% endblocktranslate %}
+                {% else %}
+                  {% translate "There are no more users with this rank." context "rank users page" %}
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <p class="lead">
+        {% translate "There are no users with this rank at the moment." context "rank users page" %}
+      </p>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock page-content %}

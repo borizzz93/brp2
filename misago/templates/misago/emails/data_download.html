@@ -1,0 +1,20 @@
+{% extends "misago/emails/base.html" %}
+{% load i18n misago_absoluteurl %}
+
+
+{% block content %}
+{% blocktranslate trimmed with user=user context "data download ready email" %}
+{{ user }}, you are receiving this message because your data is ready for download.
+{% endblocktranslate %}
+<br>
+<br>
+<a href="{% absoluteurl data_download.file.url %}">{% translate "Download data" context "data download ready email cta" %}</a>
+<br>
+<br>
+{% blocktranslate trimmed count expires_in=expires_in context "data download ready email" %}
+This link will remain active for {{ expires_in }} hour from the time this message has been sent.
+{% plural %}
+This link will remain active for {{ expires_in }} hours from the time this message has been sent.
+{% endblocktranslate %}
+<br>
+{% endblock content %}

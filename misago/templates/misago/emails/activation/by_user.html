@@ -1,0 +1,13 @@
+{% extends "misago/emails/base.html" %}
+{% load i18n misago_absoluteurl misago_capture %}
+
+
+{% block content %}
+{% blocktranslate trimmed with user=user context "account activation email" %}
+{{ user }}, to activate your account click the below link:
+{% endblocktranslate %}
+<br>
+<br>
+<a href="{% absoluteurl 'misago:activate-by-token' pk=user.pk token=activation_token %}">{% translate "Activate my account" context "account activation email cta link" %}</a>
+<br>
+{% endblock content %}

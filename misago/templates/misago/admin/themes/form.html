@@ -1,0 +1,65 @@
+{% extends "misago/admin/generic/form.html" %}
+{% load i18n misago_admin_form %}
+
+
+{% block title %}
+{% if target.pk %}
+  {{ target }}
+{% else %}
+  {% translate "New theme" context "admin theme form" %}
+{% endif %} | {{ active_link.name }} | {{ block.super }}
+{% endblock title %}
+
+
+{% block page-header %}
+{{ block.super }}
+{% if target.pk %}
+  <small>
+    {{ target }}
+  </small>
+{% endif %}
+{% endblock page-header %}
+
+
+{% block page-actions %}
+{% if target.pk %}
+  <div class="col-auto page-action">
+    <a href="{% url 'misago:admin:themes:assets' pk=target.pk %}" class="btn btn-primary btn-sm">
+      <span class="far fa-file-alt"></span>
+      {% translate "Edit assets" context "admin themes" %}
+    </a>
+  </div>
+{% endif %}
+{% endblock %}
+
+
+{% block form-header %}
+{% if target.pk %}
+  {% translate "Edit theme" context "admin theme form" %}
+{% else %}
+  {% translate "New theme" context "admin theme form" %}
+{% endif %}
+{% endblock %}
+
+
+{% block form-body %}
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Settings" context "admin theme form" %}</legend>
+
+    {% form_row form.parent %}
+    {% form_row form.name %}
+
+  </fieldset>
+</div>
+<div class="form-fieldset">
+  <fieldset>
+    <legend>{% translate "Additional information (optional)" context "admin theme form" %}</legend>
+
+    {% form_row form.version %}
+    {% form_row form.author %}
+    {% form_row form.url %}
+
+  </fieldset>
+</div>
+{% endblock form-body %}

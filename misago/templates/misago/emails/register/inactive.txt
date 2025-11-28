@@ -1,0 +1,35 @@
+{% extends "misago/emails/base.txt" %}
+{% load i18n misago_absoluteurl %}
+
+
+{% block content %}
+{% blocktranslate trimmed with user=user context "welcome email" %}
+{{ user }}, thank you for joining us!
+{% endblocktranslate %}
+{% if activation_by_admin %}
+  {% blocktranslate trimmed  context "welcome email"%}
+  Before you will be able to join discussion on our site, one of administrators will have to activate your account.
+  {% endblocktranslate %}
+
+
+  {% blocktranslate trimmed context "welcome email" %}
+  You will receive an e-mail with notification once this happens.
+  {% endblocktranslate %}
+
+
+  {% blocktranslate trimmed context "welcome email" %}
+  Thank you for your patience and see you soon!
+  {% endblocktranslate %}
+
+{% elif activation_by_user %}
+  {% blocktranslate trimmed  context "welcome email"%}
+  Before you will be able to join discussion on our site, you have to activate your account. To do so, simply click the link below:
+  {% endblocktranslate %}
+  {% absoluteurl 'misago:activate-by-token' pk=user.pk token=activation_token %}"
+
+  {% blocktranslate trimmed with login_form=login_link|safe context "welcome email" %}
+  Once your account is activated, you can always sign in to it using the form below:
+  {% endblocktranslate %}
+  {% absoluteurl LOGIN_URL %}
+{% endif %}
+{% endblock content %}

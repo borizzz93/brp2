@@ -1,0 +1,248 @@
+# Production-ready Docker Compose configuration for Misago
+# Optimized for Ubuntu 22.04 server deployment
+
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-misago}
+      POSTGRES_USER: ${POSTGRES_USER:-misago}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    networks:
+      - misago_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-misago}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - misago_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+  # Misago Web Application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    environment:
+      # Production settings
+      - DJANGO_SETTINGS_MODULE=devproject.settings
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=False
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-benj.run.place,84.21.189.163}
+      
+      # Database
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB:-misago}
+      - POSTGRES_USER=${POSTGRES_USER:-misago}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      
+      # Redis
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      
+      # Email
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT:-587}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL:-Misago <noreply@benj.run.place>}
+      
+      # Security
+      - SECURE_SSL_REDIRECT=${SECURE_SSL_REDIRECT:-True}
+      - SECURE_HSTS_SECONDS=${SECURE_HSTS_SECONDS:-31536000}
+      - SECURE_HSTS_INCLUDE_SUBDOMAINS=True
+      - SECURE_HSTS_PRELOAD=True
+      - SECURE_CONTENT_TYPE_NOSNIFF=True
+      - SECURE_BROWSER_XSS_FILTER=True
+      - X_FRAME_OPTIONS=DENY
+      
+      # Static and Media
+      - STATIC_URL=/static/
+      - MEDIA_URL=/media/
+      - STATIC_ROOT=/app/static
+      - MEDIA_ROOT=/app/media
+      
+      # Celery
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      
+      # Monitoring
+      - SENTRY_DSN=${SENTRY_DSN}
+    volumes:
+      - static_data:/app/static
+      - media_data:/app/media
+      - ./logs:/app/logs
+    networks:
+      - misago_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # Celery Worker for background tasks
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    environment:
+      - DJANGO_SETTINGS_MODULE=devproject.settings
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=False
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB:-misago}
+      - POSTGRES_USER=${POSTGRES_USER:-misago}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+    volumes:
+      - static_data:/app/static
+      - media_data:/app/media
+      - ./logs:/app/logs
+    networks:
+      - misago_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: celery -A devproject worker --loglevel=info --concurrency=4
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+  # Celery Beat Scheduler
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    environment:
+      - DJANGO_SETTINGS_MODULE=devproject.settings
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=False
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB:-misago}
+      - POSTGRES_USER=${POSTGRES_USER:-misago}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+    volumes:
+      - static_data:/app/static
+      - media_data:/app/media
+      - ./logs:/app/logs
+    networks:
+      - misago_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: celery -A devproject beat --loglevel=info
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:1.25-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-available/misago:/etc/nginx/sites-available/misago:ro
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - static_data:/var/www/static:ro
+      - media_data:/var/www/media:ro
+      - ./logs/nginx:/var/log/nginx
+    networks:
+      - misago_network
+    depends_on:
+      - web
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx Exporter for monitoring
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    restart: unless-stopped
+    ports:
+      - "9113:9113"
+    command:
+      - '-nginx.scrape-uri=http://nginx:8080/nginx_status'
+    networks:
+      - misago_network
+    depends_on:
+      - nginx
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  static_data:
+    driver: local
+  media_data:
+    driver: local
+
+networks:
+  misago_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

@@ -1,0 +1,56 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% blocktranslate trimmed with provider=settings.oauth2_provider context "error oauth2 page" %}
+Could not sign in with {{ provider }}
+{% endblocktranslate %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}{{ message }}{% endblock %}
+
+
+{% block og-title %}{% blocktranslate trimmed with provider=settings.oauth2_provider context "error oauth2 page" %}
+Could not sign in with {{ provider }}
+{% endblocktranslate %}{% endblock %}
+{% block twitter-title %}{% blocktranslate trimmed with provider=settings.oauth2_provider context "error oauth2 page" %}
+Could not sign in with {{ provider }}
+{% endblocktranslate %}{% endblock %}
+
+
+{% block og-description %}{{ message }}{% endblock %}
+{% block twitter-description %}{{ message }}{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-error-social">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">sync_problem</span>
+      </div>
+
+      <div class="message-body">
+          <p class="lead">
+            {% blocktranslate trimmed with provider=settings.oauth2_provider context "error oauth2 page" %}
+              Could not sign in with {{ provider }}
+            {% endblocktranslate %}
+          </p>
+          {% if error.message %}
+            <p>{{ error.message }}</p>
+          {% endif %}
+          {% if error.recoverable %}
+            <p>
+              {% translate "Please try again." context "error oauth2 page" %}
+            </p>
+            <p>
+              <a class="btn btn-primary" href="{% url 'misago:oauth2-login' %}">{% translate "Sign in" context "error oauth2 page cta" %}</a>
+            </p>
+          {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

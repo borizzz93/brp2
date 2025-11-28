@@ -1,0 +1,12 @@
+{% load i18n %}
+<form aria-hidden="true" id="hidden-login-form" method="post" action="{{ LOGIN_URL }}" style="display: none;">
+  {% csrf_token %}
+  <input name="next" type="text" />
+  <input type="submit" id="signin-button" />
+</form>
+{% if user.is_authenticated %}
+  <form aria-hidden="true" id="hidden-logout-form" method="post" action="{% url LOGOUT_URL %}" style="display: none;">
+    {% csrf_token %}
+    <input type="submit" id="signin-button" />
+  </form>
+{% endif %}

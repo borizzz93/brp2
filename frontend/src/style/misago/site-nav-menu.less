@@ -1,0 +1,53 @@
+// Set height and width of nav dropdown
+.site-nav-dropdown {
+  max-height: calc(100vh - @dropdown-height-offset);
+  overflow-y: auto;
+  width: 320px;
+}
+
+// Style vanilla category header differently
+.site-nav-category-header a {
+  color: @gray-light;
+  font-weight: bold;
+}
+
+// Spread and align items in categories
+.site-nav-category-header a,
+.site-nav-category a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.site-nav-category + .site-nav-category-header {
+  margin-top: @line-height-computed / 2;
+}
+
+.site-nav-category-last {
+  margin-bottom: @line-height-computed / 2;
+}
+
+.site-nav-category-last + .site-nav-category-header {
+  margin-top: 0;
+}
+
+// Hide sign in menu on larger devices
+@media screen and (min-width: @screen-sm-min) {
+  .site-nav-sign-in-message,
+  .site-nav-sign-in-options {
+    display: none;
+  }
+}
+
+.site-nav-menu.overlay-menu-list {
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: @line-height-computed;
+}

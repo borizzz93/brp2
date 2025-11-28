@@ -1,0 +1,33 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% blocktranslate trimmed with backend=backend_name context "social auth page" %}
+  Sign in with {{ backend }}
+{% endblocktranslate %} | {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div class="page page-options page-error page-noscript">
+  <noscript>
+    <div class="container page-container">
+      <div class="message-panel">
+
+        <div class="message-icon">
+          <span class="material-icon">fingerprint</span>
+        </div>
+
+        <div class="message-body">
+          <p class="lead">{% translate "Enable JavaScript" context "social auth page" %}</p>
+          <p>
+            {% blocktranslate trimmed with backend=backend_name context "social auth page" %}
+              You need to enable JavaScript in your browser to complete the sign in with {{ backend }}.
+            {% endblocktranslate %}
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </noscript>
+</div>
+{% endblock content %}

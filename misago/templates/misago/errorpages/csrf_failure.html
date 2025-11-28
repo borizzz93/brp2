@@ -1,0 +1,31 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Request blocked" context "error csrf page" %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}
+{% translate "This error is usually caused by your browser not accepting or using outdated cookies. Check your browser configuration and try again." context "error csrf page" %}
+{% endblock meta-description %}
+
+
+{% block content %}
+<div class="page page-error page-error-csrf">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">remove_circle_outline</span>
+      </div>
+
+      <div class="message-body">
+        <p class="lead">{% translate "Suspicious request blocked." context "error csrf page" %}</p>
+        <p>{% translate "This error is usually caused by the used web browser not accepting or using outdated cookies." context "error csrf authenticated page" %}</p>
+        <p>{% translate "Check your browser configuration and try again." context "error csrf page" %}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

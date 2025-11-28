@@ -1,0 +1,27 @@
+{% load i18n misago_capture %}
+<div class="list-group-category-item-stats-col">
+  <div class="category-stat-threads">
+    {% capture trimmed as category_threads %}
+      <span class="category-stat-value">
+        {{ category_data.children_threads }}
+      </span>
+    {% endcapture %}
+    {% blocktranslate trimmed with threads=category_threads|safe count counter=category_data.children_threads context "category stats" %}
+      {{ threads }} Thread
+    {% plural %}
+      {{ threads }} Threads
+    {% endblocktranslate %}
+  </div>
+  <div class="category-stat-posts">
+    {% capture trimmed as category_posts %}
+      <span class="category-stat-value">
+        {{ category_data.children_posts }}
+      </span>
+    {% endcapture %}
+    {% blocktranslate trimmed with posts=category_posts|safe count counter=category_data.children_posts context "category stats" %}
+      {{ posts }} Post
+    {% plural %}
+      {{ posts }} Posts
+    {% endblocktranslate %}
+  </div>
+</div>

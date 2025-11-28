@@ -1,0 +1,60 @@
+{% extends "misago/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% translate "Page not available" context "error 403 page" %} | {{ block.super }}{% endblock %}
+
+
+{% block meta-description %}
+  {% if message %}
+    {{ message }}
+  {% else %}
+    {% translate "You don't have permission to access this page." context "error 403 page" %}
+  {% endif %}
+{% endblock meta-description %}
+
+
+{% block og-title %}{% translate "Page not available" context "error 403 page" %}{% endblock %}
+{% block twitter-title %}{% translate "Page not available" context "error 403 page" %}{% endblock %}
+
+
+{% block og-description %}
+  {% if message %}
+    {{ message }}
+  {% else %}
+    {% translate "You don't have permission to access this page." context "error 403 page" %}
+  {% endif %}
+{% endblock %}
+
+
+{% block twitter-description %}
+  {% if message %}
+    {{ message }}
+  {% else %}
+    {% translate "You don't have permission to access this page." context "error 403 page" %}
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="page page-error page-error-403">
+  <div class="container page-container">
+    <div class="message-panel">
+
+      <div class="message-icon">
+        <span class="material-icon">remove_circle_outline</span>
+      </div>
+
+      <div class="message-body">
+        <p class="lead">{% translate "This page is not available." context "error 403 page" %}</p>
+        {% if message %}
+          <p>{{ message|force_escape|urlize|linebreaksbr }}</p>
+        {% else %}
+          <p>{% translate "You don't have permission to access this page." context "error 403 page" %}</p>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

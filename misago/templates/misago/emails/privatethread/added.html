@@ -1,0 +1,21 @@
+{% extends "misago/emails/base.html" %}
+{% load i18n misago_absoluteurl misago_capture %}
+
+
+{% block content %}
+{% capture trimmed as thread_title %}
+<b>{{ thread.title }}</b>
+{% endcapture %}
+{% blocktranslate trimmed with user=user.username sender=sender.username thread=thread_title|safe context "new private thread email" %}
+{{ user }}, you are receiving this notification because {{ sender }} has added you to the private thread {{ thread }}.
+{% endblocktranslate %}
+<br>
+<br>
+{% blocktranslate trimmed context "new private thread email" %}
+To read this thread click the link below:
+{% endblocktranslate %}
+<br>
+<br>
+<a href="{% absoluteurl thread_url %}">{{ thread.title }}</a>
+<br>
+{% endblock content %}
