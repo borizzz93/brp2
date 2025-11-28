@@ -38,11 +38,12 @@ DOMAIN="benj.run.place"
 SERVER_IP="84.21.189.163"
 GITHUB_REPO="https://borizzz93/brp2.git"
 
-# Check if running as root
+# Check if running as root and adjust behavior
 if [ "$EUID" -eq 0 ]; then
-    print_error "This script should not be run as root!"
-    print_status "Please run as regular user with sudo privileges"
-    exit 1
+    print_warning "Running as root - will use direct commands instead of sudo"
+    SUDO_CMD=""
+else
+    SUDO_CMD="sudo"
 fi
 
 print_header "🚀 MISAGO AUTOMATED DEPLOYMENT"
